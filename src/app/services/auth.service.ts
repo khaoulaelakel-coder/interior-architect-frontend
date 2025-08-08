@@ -40,7 +40,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
 
-  private readonly API_BASE_URL = 'http://localhost:8000/api';
+  private readonly API_BASE_URL = 'https://interior-architect-backend-main-36p6qz.laravel.cloud/api';
 
   private currentUserSubject = new BehaviorSubject<User | null>(this.getCurrentUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();

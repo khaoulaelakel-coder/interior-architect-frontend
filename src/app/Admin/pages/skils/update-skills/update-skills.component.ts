@@ -40,7 +40,7 @@ export class UpdateSkillsComponent implements OnInit {
         });
 
         if (skill.logo) {
-          this.previewUrl = 'http://localhost:8000/api/images/' + skill.logo;
+          this.previewUrl = 'https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/' + skill.logo;
         }
       },
       error: (err) => {

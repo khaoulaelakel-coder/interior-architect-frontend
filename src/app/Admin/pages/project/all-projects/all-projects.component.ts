@@ -111,15 +111,15 @@ export class AllProjectsComponent implements OnInit {
     this.modalImages = images.map(img => {
       if (typeof img === 'string') {
         // If image is just a string path
-        return `http://localhost:8000/api/images/${img}`;
+        return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${img}`;
       } else if (img && typeof img === 'object') {
         // If image is an object with image_url property
         if (img.image_url) {
-          return `http://localhost:8000/api/images/${img.image_url}`;
+          return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${img.image_url}`;
         } else if (img.path) {
-          return `http://localhost:8000/api/images/${img.path}`;
+          return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${img.path}`;
         } else if (img.url) {
-          return `http://localhost:8000/api/images/${img.url}`;
+          return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${img.url}`;
         }
       }
       // Fallback
@@ -182,15 +182,15 @@ export class AllProjectsComponent implements OnInit {
     // Handle different image data structures
     if (typeof image === 'string') {
       // If image is just a string path
-      return `http://localhost:8000/api/images/${image}`;
+      return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${image}`;
     } else if (image && typeof image === 'object') {
       // If image is an object with image_url property
       if (image.image_url) {
-        return `http://localhost:8000/api/images/${image.image_url}`;
+        return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${image.image_url}`;
       } else if (image.path) {
-        return `http://localhost:8000/api/images/${image.path}`;
+        return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${image.path}`;
       } else if (image.url) {
-        return `http://localhost:8000/api/images/${image.url}`;
+        return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${image.url}`;
       }
     }
     // Fallback

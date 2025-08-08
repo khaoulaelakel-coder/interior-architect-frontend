@@ -33,7 +33,7 @@ export class AllSkillsComponent implements OnInit {
           console.log(`Skill ${index}:`, {
             name: skill.name,
             logo: skill.logo,
-            fullImageUrl: `http://localhost:8000/api/images/${skill.logo}`
+            fullImageUrl: `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${skill.logo}`
           });
         });
       },

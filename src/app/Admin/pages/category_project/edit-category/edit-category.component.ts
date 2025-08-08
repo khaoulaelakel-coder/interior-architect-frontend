@@ -66,7 +66,7 @@ export class EditCategoryComponent implements OnInit {
           // Handle existing cover image
           if (categoryData.cover) {
             this.existingCover = categoryData.cover;
-            this.previewUrl = 'http://localhost:8000/api/images/' + categoryData.cover;
+            this.previewUrl = 'https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/' + categoryData.cover;
           }
         } else {
           console.error('Invalid response structure:', res);

@@ -39,7 +39,7 @@ export class ContactComponent {
       return;
     }
 
-    this.http.post('http://localhost:8000/api/contact', this.formData).subscribe({
+    this.http.post('https://interior-architect-backend-main-36p6qz.laravel.cloud/api/contact', this.formData).subscribe({
       next: () => {
         this.notificationService.showSuccess('Message envoyé avec succès !');
         // Reset form

@@ -324,7 +324,7 @@ export class UpdateProjectComponent implements OnInit {
   }
 
   getImageUrl(imagePath: string): string {
-    return `http://localhost:8000/api/images/${imagePath}`;
+    return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${imagePath}`;
   }
 
   onImageError(event: Event): void {
