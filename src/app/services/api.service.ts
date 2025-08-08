@@ -6,7 +6,7 @@ import { CategoryResponse } from '../model/category.model'; // Adjust the import
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'https://interior-architect-backend-main-36p6qz.laravel.cloud/api';
+  private apiUrl = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient) { }  // Inject HttpClient here
 

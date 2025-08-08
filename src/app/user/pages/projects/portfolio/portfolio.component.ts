@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 })
 export class PortfolioComponent implements OnInit {
   categories: category[] = [];
-  baseStorageUrl = 'https://interior-architect-backend-main-36p6qz.laravel.cloud/storage/'; // Fixed storage URL
+  baseStorageUrl = 'http://localhost:8000/storage/'; // Local storage URL
 
 
   constructor(private api: ApiService) { }
