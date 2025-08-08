@@ -22,9 +22,9 @@ export class RacentprojectsComponent implements OnInit {
 
   loadRecentProjects(): void {
     this.apiService.getProjects().subscribe({
-      next: (data) => {
+      next: (data: any) => {
         // Get the 4 most recent projects
-        this.recentProjects = data.projects.slice(0, 4);
+        this.recentProjects = data.projects?.slice(0, 4) || [];
         this.loading = false;
       },
       error: (error) => {
@@ -35,7 +35,17 @@ export class RacentprojectsComponent implements OnInit {
   }
 
   getImageUrl(imagePath: string): string {
-    return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${imagePath}`;
+    return `http://localhost:8000/api/images/${imagePath}`;
+  }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.style.display = 'none';
+    // Show fallback content
+    const parent = target.parentElement;
+    if (parent) {
+      parent.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-500">Aucune Image</div>';
+    }
   }
 
   getFirstImage(project: any): string {

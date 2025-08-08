@@ -22,10 +22,15 @@ export class AllProjectsComponent implements OnInit {
   modalImages: string[] = [];
   currentImageIndex: number = 0;
   showModalDelete: boolean = false;
-
+  loading = false;
 
   categories: category[] = [];
   deleteId: number | null = null;
+
+  // Pagination properties
+  pagination: any = null;
+  currentPage = 1;
+  totalPages = 1;
 
   constructor(private apiservice: ApiService, private router: Router
   ) { }
@@ -50,27 +55,82 @@ export class AllProjectsComponent implements OnInit {
   }
 
   loadProjects() {
-    this.apiservice.getProjects().subscribe({
-      next: (response) => {
-        // Transform the data to match your interface
-        this.projects = response.projects.map((project: any) => ({
-          ...project,
-          image_url: project.images ? project.images.map((img: any) => img.image_url) : []
-        }));
-
-        console.log('Transformed projects:', this.projects); // Debug
+    this.loading = true;
+    this.apiservice.getProjects(this.currentPage).subscribe({
+      next: (response: any) => {
+        if (response.status === 'success') {
+          this.projects = response.projects;
+          this.pagination = response.pagination;
+          this.currentPage = response.pagination?.current_page || 1;
+          this.totalPages = response.pagination?.last_page || 1;
+        } else {
+          this.projects = response.projects || [];
+        }
+        console.log('Projects loaded:', this.projects); // Debug
       },
       error: (error) => {
         console.error('Error fetching projects:', error);
+        this.projects = [];
+      },
+      complete: () => {
+        this.loading = false;
       }
     });
+  }
+
+  // Pagination methods
+  loadPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadProjects();
+    }
+  }
+
+  getPageNumbers(): number[] {
+    const pages: number[] = [];
+    const start = Math.max(1, this.currentPage - 2);
+    const end = Math.min(this.totalPages, this.currentPage + 2);
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    return pages;
   }
   getCategoryName(categoryId: number): string {
     const category = this.categories.find(cat => cat.id === categoryId);
     return category ? category.name : 'Catégorie inconnue';
   }
-  showImages(images: { image_url: File }[]) {
-    this.modalImages = images.map(img => `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${img.image_url}`);
+  showImages(images: any[]) {
+    // Handle different image data structures
+    if (!images || images.length === 0) {
+      console.warn('No images to show');
+      return;
+    }
+
+    // Transform images to URLs based on data structure
+    this.modalImages = images.map(img => {
+      if (typeof img === 'string') {
+        // If image is just a string path
+        return `http://localhost:8000/api/images/${img}`;
+      } else if (img && typeof img === 'object') {
+        // If image is an object with image_url property
+        if (img.image_url) {
+          return `http://localhost:8000/api/images/${img.image_url}`;
+        } else if (img.path) {
+          return `http://localhost:8000/api/images/${img.path}`;
+        } else if (img.url) {
+          return `http://localhost:8000/api/images/${img.url}`;
+        }
+      }
+      // Fallback
+      return 'assets/Image/user.png';
+    }).filter(url => url !== 'assets/Image/user.png'); // Remove fallback URLs
+
+    if (this.modalImages.length === 0) {
+      console.warn('No valid images found');
+      return;
+    }
+
     this.currentImageIndex = 0;
     this.showModal = true;
     console.log('Modal images:', this.modalImages);
@@ -116,6 +176,30 @@ export class AllProjectsComponent implements OnInit {
 
   getImageUrl(imageFile: File): string {
     return URL.createObjectURL(imageFile);
+  }
+
+  getProjectImageUrl(image: any): string {
+    // Handle different image data structures
+    if (typeof image === 'string') {
+      // If image is just a string path
+      return `http://localhost:8000/api/images/${image}`;
+    } else if (image && typeof image === 'object') {
+      // If image is an object with image_url property
+      if (image.image_url) {
+        return `http://localhost:8000/api/images/${image.image_url}`;
+      } else if (image.path) {
+        return `http://localhost:8000/api/images/${image.path}`;
+      } else if (image.url) {
+        return `http://localhost:8000/api/images/${image.url}`;
+      }
+    }
+    // Fallback
+    return 'assets/Image/user.png';
+  }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = 'assets/Image/user.png'; // Use existing image as fallback
   }
 
   openDeleteModal(id: number) {

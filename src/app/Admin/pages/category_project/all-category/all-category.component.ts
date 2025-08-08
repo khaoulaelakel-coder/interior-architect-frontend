@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class AllCategoryComponent implements OnInit {
   categories: category[] = [];
-  baseStorageUrl = 'http://localhost:8000/storage/'; // Local storage URL
+  baseStorageUrl = 'http://localhost:8000/api/images/'; // Database image storage URL
 
   constructor(private api: ApiService, private router: Router) { }
 
@@ -68,7 +68,7 @@ export class AllCategoryComponent implements OnInit {
 
   onImageError(event: Event): void {
     const target = event.target as HTMLImageElement;
-    target.src = 'assets/default-image.png'; // Provide a fallback image path
+    target.src = 'assets/Image/user.png'; // Use existing user.png as fallback
   }
 
   // Load categories from API

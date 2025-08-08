@@ -17,12 +17,14 @@ import { DashComponent } from './Admin/pages/dash/dash.component';
 import { AddProjectComponent } from './Admin/pages/project/add-project/add-project.component';
 import { AllProjectsComponent } from './Admin/pages/project/all-projects/all-projects.component';
 import { ContactComponent } from './Admin/pages/contact/contact.component';
+import { ContactListComponent } from './Admin/pages/contact-list/contact-list.component';
 import { CreateSkillsComponent } from './Admin/pages/skils/create-skills/create-skills.component';
 import { AllSkillsComponent } from './Admin/pages/skils/all-skills/all-skills.component';
 import { CreateCategoryComponent } from './Admin/pages/category_project/create-category/create-category.component';
 import { AllCategoryComponent } from './Admin/pages/category_project/all-category/all-category.component';
 import { UpdateProjectComponent } from './Admin/pages/project/update-project/update-project.component';
 import { LoginComponent } from './login/login.component';
+
 import { UpdateExperienceComponent } from './Admin/pages/EE/update-experience/update-experience.component';
 import { EditCategoryComponent } from './Admin/pages/category_project/edit-category/edit-category.component';
 import { UpdateSkillsComponent } from './Admin/pages/skils/update-skills/update-skills.component';
@@ -48,6 +50,7 @@ export const routes: Routes = [
     path: 'admin/login',
     component: LoginComponent
   },
+
   {
     path: 'admin',
     component: AdminLayoutComponent,
@@ -138,12 +141,17 @@ export const routes: Routes = [
         component: ContactComponent,
         canActivate: [adminGuard]
       },
+      {
+        path: 'contact-list',
+        component: ContactListComponent,
+        canActivate: [adminGuard]
+      },
 
       // Redirect empty admin path to dashboard
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ],
   },
 
-  // Fallback route - only redirect to home for public routes
+  // Fallback route
   { path: '**', redirectTo: '' }
 ];

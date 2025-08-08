@@ -16,9 +16,9 @@
 
       <form class="space-y-4" (ngSubmit)="onSubmit()" #form="ngForm">
         <div class="flex flex-col md:flex-row gap-4">
-          <input name="name" [(ngModel)]="formData.name" type="text" placeholder="Nom"
+          <input name="name" [(ngModel)]="formData.name" type="text" placeholder="Nom" required
             class="bg-[#1f2c3d] text-white px-4 py-3 rounded-lg w-full placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fbd1d4]" />
-          <input name="email" [(ngModel)]="formData.email" type="email" placeholder="Votre E-mail"
+          <input name="email" [(ngModel)]="formData.email" type="email" placeholder="Votre E-mail" required
             class="bg-[#1f2c3d] text-white px-4 py-3 rounded-lg w-full placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fbd1d4]" />
         </div>
 
@@ -29,7 +29,7 @@
             class="bg-[#1f2c3d] text-white px-4 py-3 rounded-lg w-full placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fbd1d4]" />
         </div>
 
-        <textarea name="message" [(ngModel)]="formData.message" rows="4" placeholder="Votre message"
+        <textarea name="message" [(ngModel)]="formData.message" rows="4" placeholder="Votre message" required
           class="bg-[#1f2c3d] text-white px-4 py-3 rounded-lg w-full placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fbd1d4]"></textarea>
 
         <button type="submit"

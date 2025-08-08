@@ -1,4 +1,4 @@
-import { Component , OnInit, signal, Signal} from '@angular/core';
+import { Component, OnInit, signal, Signal } from '@angular/core';
 import { Skill } from '../../model/skills.model';
 import { ApiService } from '../../services/api.service';
 @Component({
@@ -9,18 +9,22 @@ import { ApiService } from '../../services/api.service';
   styleUrl: './skills.component.css'
 })
 export class SkillsComponent implements OnInit {
-skills = signal<Skill[]>([]); // 🟢 Signal that holds all skills
+  skills = signal<Skill[]>([]); // 🟢 Signal that holds all skills
 
-constructor(private api: ApiService) { }
+  constructor(private api: ApiService) { }
 
-ngOnInit()
-{
-  this.loadSkills();
-}
+  ngOnInit() {
+    this.loadSkills();
+  }
 
-loadSkills(): void {
+  loadSkills(): void {
     this.api.getSkills().subscribe((res: any) => {
       this.skills.set(res.skills || []);
     });
+  }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = 'assets/Image/user.png'; // Use existing image as fallback
   }
 }

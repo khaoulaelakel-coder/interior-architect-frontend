@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { category } from '../../../../model/category.model';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../../services/api.service';
+import { Router } from '@angular/router';
+import { category } from '../../../../model/category.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,7 +16,7 @@ import Swal from 'sweetalert2';
 export class CreateCategoryComponent implements OnInit {
   categoryForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private api: ApiService) {}
+  constructor(private fb: FormBuilder, private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.categoryForm = this.fb.group({
@@ -54,7 +55,7 @@ export class CreateCategoryComponent implements OnInit {
 
     // Create FormData to handle file uploads
     const formData = new FormData();
-    
+
     // Add category names
     categoriesToSend.forEach((name, index) => {
       formData.append(`name[${index}]`, name);
@@ -80,17 +81,36 @@ export class CreateCategoryComponent implements OnInit {
         console.log('Categories added successfully:', res);
         this.categoryForm.reset();
         Swal.fire({
-          title: 'Success',
-          text: 'Categories added successfully!',
+          title: 'Succès',
+          text: 'Catégories ajoutées avec succès!',
           icon: 'success',
           confirmButtonText: 'OK'
+        }).then(() => {
+          this.router.navigate(['/admin/list/categories']);
         });
       },
       error: (error: any) => {
         console.error('Error adding categories:', error);
+
+        let errorMessage = 'Échec de l\'ajout des catégories. Veuillez réessayer.';
+
+        if (error.status === 422) {
+          // Validation error
+          const validationErrors = error.error.errors;
+          if (validationErrors) {
+            const errorMessages = [];
+            for (const field in validationErrors) {
+              errorMessages.push(...validationErrors[field]);
+            }
+            errorMessage = errorMessages.join('\n');
+          }
+        } else if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
+
         Swal.fire({
-          title: 'Error',
-          text: 'Failed to add categories. Please try again.',
+          title: 'Erreur',
+          text: errorMessage,
           icon: 'error',
           confirmButtonText: 'OK'
         });

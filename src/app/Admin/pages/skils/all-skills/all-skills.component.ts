@@ -26,6 +26,16 @@ export class AllSkillsComponent implements OnInit {
       next: (res: any) => {
         console.log('API response:', res);
         this.skills = res.skills ?? []; // ✅ اسحب skills من داخل الـ object
+
+        // Debug: Log skill data and image URLs
+        console.log('Skills data:', this.skills);
+        this.skills.forEach((skill, index) => {
+          console.log(`Skill ${index}:`, {
+            name: skill.name,
+            logo: skill.logo,
+            fullImageUrl: `http://localhost:8000/api/images/${skill.logo}`
+          });
+        });
       },
       error: (err) => {
         console.error('Failed to load skills', err);
@@ -81,5 +91,15 @@ export class AllSkillsComponent implements OnInit {
 
   createSkill(): void {
     this.router.navigate(['/admin/add/skills']);
+  }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    console.error('Image failed to load:', {
+      originalSrc: target.src,
+      skillName: target.alt,
+      settingFallback: 'assets/Image/user.png'
+    });
+    target.src = 'assets/Image/user.png'; // Use existing image as fallback
   }
 }

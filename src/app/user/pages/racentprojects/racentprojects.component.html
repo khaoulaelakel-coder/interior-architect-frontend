@@ -15,7 +15,8 @@
     <div class="relative bg-gray-100 h-48 rounded-lg overflow-hidden shadow-md group">
       @if (getFirstImage(project)) {
       <img [src]="getFirstImage(project)" [alt]="project.name"
-        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        (error)="onImageError($event)" />
       } @else {
       <div class="w-full h-full flex items-center justify-center text-gray-500">
         Aucune Image

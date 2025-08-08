@@ -1,39 +1,39 @@
 <section class="w-full h-full bg-[#2B4057] text-white py-16 px-4 md:px-24">
-  <h1 class="text-3xl font-bold text-center mb-12">Educations & Experience</h1>
+  <h1 class="text-3xl font-bold text-center mb-12">Éducation & Expérience</h1>
 
   <div class="flex flex-col py-16 md:flex-row justify-between gap-20">
     <!-- Education -->
     <div class="w-full md:w-1/2">
-      <h2 class="text-2xl font-semibold mb-1">Education:</h2>
+      <h2 class="text-2xl font-semibold mb-1">Éducation :</h2>
       <hr class="border-white mb-6 w-3/4">
 
-     @for (edu of educations; track edu.id) {
-  <div class="mb-12">
-    <p class="text-[10px] leading-3">
-      {{ edu.year_start | date: 'MMM yyyy' }} -
-      {{ edu.year_end | date: 'MMM yyyy' }}
-    </p>
-    <h3 class="text-xl font-bold leading-tight">{{ edu.diploma }}</h3>
-    <p class="text-sm">{{ edu.school }}</p>
-  </div>
-}
+      @for (edu of educations; track edu.id) {
+      <div class="mb-12">
+        <p class="text-[10px] leading-3">
+          {{ edu.year_start | date: 'MMM yyyy' }} -
+          {{ edu.year_end | date: 'MMM yyyy' }}
+        </p>
+        <h3 class="text-xl font-bold leading-tight">{{ edu.diploma }}</h3>
+        <p class="text-sm">{{ edu.school }}</p>
+      </div>
+      }
     </div>
 
     <!-- Experience -->
     <div class="w-full md:w-1/2">
-      <h2 class="text-2xl font-semibold mb-1">Experiences</h2>
+      <h2 class="text-2xl font-semibold mb-1">Expériences</h2>
       <hr class="border-white mb-6 w-3/4">
 
       @for (exp of experiences; track exp.id) {
-        <div class="mb-8">
-          <p class="text-[10px] leading-3">
-            {{ exp.year_start | date: 'yyyy' }} - 
-            {{ exp.currently_working ? 'Present' : (exp.year_end | date: 'yyyy') }}
+      <div class="mb-8">
+        <p class="text-[10px] leading-3">
+          {{ exp.year_start | date: 'yyyy' }} -
+          {{ exp.currently_working ? 'Présent' : (exp.year_end | date: 'yyyy') }}
 
-          </p>
-          <h3 class="text-xl font-bold leading-tight">{{ exp.poste }}</h3>
-          <p class="text-sm text-[#5f5f5f]">{{ exp.place }}</p>
-        </div>
+        </p>
+        <h3 class="text-xl font-bold leading-tight">{{ exp.poste }}</h3>
+        <p class="text-sm text-[#5f5f5f]">{{ exp.place }}</p>
+      </div>
       }
     </div>
   </div>

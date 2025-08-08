@@ -10,9 +10,8 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }  // Inject HttpClient here
 
-  getProjects(): Observable<any> {
-    //This method calls the API to get all projects
-    return this.http.get(`${this.apiUrl}/projects`);
+  getProjects(page: number = 1) {
+    return this.http.get(`${this.apiUrl}/projects?page=${page}`);
   }
 
   getProjectById(projectId: number): Observable<any> {
@@ -38,7 +37,7 @@ export class ApiService {
   }
 
   getProjectsByCategory(categoryId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/categories/${categoryId}/projects`);
+    return this.http.get(`${this.apiUrl}/category/${categoryId}/projects`);
   }
 
   getEducations() {
@@ -122,6 +121,10 @@ export class ApiService {
   }
   getContacts() {
     return this.http.get<any[]>(`${this.apiUrl}/admin/contacts`);
+  }
+
+  deleteContact(id: number) {
+    return this.http.delete(`${this.apiUrl}/admin/contacts/${id}`);
   }
 
   /*addProjects(fromData : FormData)

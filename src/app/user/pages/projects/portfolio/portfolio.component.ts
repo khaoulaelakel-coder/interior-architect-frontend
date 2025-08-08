@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 })
 export class PortfolioComponent implements OnInit {
   categories: category[] = [];
-  baseStorageUrl = 'http://localhost:8000/storage/'; // Local storage URL
+  baseStorageUrl = 'http://localhost:8000/api/images/'; // Database image storage URL
 
 
   constructor(private api: ApiService) { }
@@ -35,6 +35,11 @@ export class PortfolioComponent implements OnInit {
   getImageUrl(coverPath: string): string {
     if (!coverPath) return '';
     return this.baseStorageUrl + coverPath;
+  }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = 'assets/Image/user.png'; // Use existing image as fallback
   }
 
 }

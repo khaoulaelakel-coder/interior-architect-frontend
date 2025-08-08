@@ -22,7 +22,8 @@
         <tr class="border-t hover:bg-gray-50">
           <td class="py-2 px-3">{{ skill.name }}</td>
           <td class="py-2 px-3">
-            <img [src]="'http://localhost:8000/storage/' + skill.logo" alt="{{ skill.name }}" class="h-6" />
+            <img [src]="'http://localhost:8000/api/images/' + skill.logo" alt="{{ skill.name }}" class="h-6"
+              (error)="onImageError($event)" />
           </td>
           <td class="py-2 px-3">
             <button class="text-red-500 hover:underline text-xs" (click)="deleteSkill(skill.id!)">Delete</button>

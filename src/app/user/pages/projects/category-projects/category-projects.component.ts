@@ -35,6 +35,11 @@ export class CategoryProjectsComponent implements OnInit {
   }
 
   getImageUrl(filename: string): string {
-    return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${filename}`;
+    return `http://localhost:8000/api/images/${filename}`;
+  }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = 'assets/Image/user.png'; // Use existing image as fallback
   }
 }

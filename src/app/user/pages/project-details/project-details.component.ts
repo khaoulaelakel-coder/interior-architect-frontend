@@ -42,7 +42,12 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   getImageUrl(imagePath: string): string {
-    return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${imagePath}`;
+    return `http://localhost:8000/api/images/${imagePath}`;
+  }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = 'assets/Image/user.png'; // Use existing image as fallback
   }
 
   nextImage(): void {
