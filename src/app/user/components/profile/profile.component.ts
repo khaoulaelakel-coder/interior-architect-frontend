@@ -25,14 +25,18 @@ export class ProfileComponent implements AfterViewInit , OnInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(()=>
-    {
-      const counterYears = new CountUp('experienceCounter' , 2 , 
-        {
-          startVal:1,
-          duration:2
-        }
-      );
+   setTimeout(() => {
+  const counterYears = new CountUp('experienceCounter', 2, {
+    startVal: 1,
+    duration: 2
+  });
+
+  if (!counterYears.error) {
+    counterYears.start(); // This makes it go from 1 → 2
+  } else {
+    console.error(counterYears.error);
+  }
+}, 500);
 
       const counterProject = new CountUp('projectCounter' , 100, 
         {
