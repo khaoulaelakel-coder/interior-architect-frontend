@@ -68,7 +68,7 @@ export class ProfileComponent implements AfterViewInit, OnInit {
       duration: 2.5
     });
 
-    const counterClient = new CountUp('clientCounter', 100, {
+    const counterClient = new CountUp('clientCounter', 80, {
       startVal: 0,
       duration: 2.2
     });
@@ -84,7 +84,7 @@ export class ProfileComponent implements AfterViewInit, OnInit {
       duration: 2.5
     });
 
-    const counterClientMobile = new CountUp('clientCounterMobile', 50, {
+    const counterClientMobile = new CountUp('clientCounterMobile', 80, {
       startVal: 0,
       duration: 2.2
     });

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CategoryResponse } from '../model/category.model';
 import { environment } from '../../environments/environment';
@@ -39,8 +39,16 @@ export class ApiService {
     return this.http.get<CategoryResponse>(`${this.apiUrl}/category`);
   }
 
-  getProjectsByCategory(categoryId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/category/${categoryId}/projects`);
+  getProjectsByCategory(categoryId: string, params?: any): Observable<any> {
+    let httpParams = new HttpParams();
+
+    if (params) {
+      Object.keys(params).forEach(key => {
+        httpParams = httpParams.set(key, params[key]);
+      });
+    }
+
+    return this.http.get(`${this.apiUrl}/category/${categoryId}/projects`, { params: httpParams });
   }
 
   getcategory() {

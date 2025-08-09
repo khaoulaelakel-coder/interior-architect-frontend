@@ -54,7 +54,7 @@
     <div *ngIf="!loading && !error">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         @for (project of recentProjects; track project.id; let i = $index) {
-        <a [routerLink]="['/project-details', project.id]" class="project-card group fade-in block cursor-pointer">
+        <div class="project-card group fade-in block cursor-pointer" (click)="navigateToProject(project.id, $event)">
           <div class="project-image-container">
             @if (getFirstImage(project)) {
             <img [src]="getFirstImage(project)" [alt]="project.name" class="project-image"
@@ -75,7 +75,7 @@
               <div class="project-overlay-content">
                 <h3 class="project-title">{{ project.name }}</h3>
                 <p class="project-category">{{ project.category?.name || 'Design' }}</p>
-                <a [routerLink]="['/project-details', project.id]" class="project-view-btn cursor-pointer">
+                <button (click)="navigateToProject(project.id, $event)" class="project-view-btn cursor-pointer">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -84,7 +84,7 @@
                     </path>
                   </svg>
                   Voir le projet
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@
               {{ project.description | slice:0:60 }}{{ project.description?.length > 60 ? '...' : '' }}
             </p>
           </div>
-        </a>
+        </div>
         } @empty {
         <div class="col-span-full text-center py-16">
           <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">

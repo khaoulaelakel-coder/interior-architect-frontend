@@ -47,15 +47,15 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  
+
   .gap-6 {
     gap: 1rem;
   }
-  
+
   .absolute.bottom-0 .p-8 {
     padding: 1.5rem;
   }
-  
+
   .text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
@@ -73,9 +73,26 @@
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
+}
+
+/* Hide footer on portfolio page */
+:host {
+  display: block;
+}
+
+/* Global footer hiding when portfolio component is active */
+:host~* app-footer,
+:host ::ng-deep app-footer {
+  display: none !important;
+}
+
+/* Alternative approach - hide footer globally when this component is loaded */
+body:has(app-portfolio) app-footer {
+  display: none !important;
 }
 
 /* Dark theme support */
@@ -83,11 +100,11 @@
   .bg-white {
     background-color: #1e293b;
   }
-  
+
   .shadow-sm {
     box-shadow: 0 1px 2px 0 rgb(255 255 255 / 0.05);
   }
-  
+
   .hover\:shadow-xl:hover {
     box-shadow: 0 20px 25px -5px rgb(255 255 255 / 0.1), 0 8px 10px -6px rgb(255 255 255 / 0.1);
   }

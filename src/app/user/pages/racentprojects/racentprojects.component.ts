@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../services/api.service';
 import { Subject } from 'rxjs';
@@ -20,7 +20,7 @@ export class RacentprojectsComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadRecentProjects();
@@ -68,5 +68,33 @@ export class RacentprojectsComponent implements OnInit, OnDestroy {
       return project.images[0].image_url; // Return base64 data directly
     }
     return ''; // Return empty string if no images
+  }
+
+  // Navigate to project with forced scroll
+  navigateToProject(projectId: number, event?: Event): void {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    console.log('Navigating to project with forced scroll:', projectId);
+
+    // Force scroll to top BEFORE navigation
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Small delay then navigate
+    setTimeout(() => {
+      this.router.navigate(['/project-details', projectId]).then(() => {
+        // Additional scroll after navigation
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          console.log('Post-navigation scroll applied');
+        }, 0);
+      });
+    }, 50);
   }
 }

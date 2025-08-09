@@ -64,14 +64,14 @@
           </p>
 
           <!-- Action Button -->
-          <a [routerLink]="['/categories', cat.id]"
-            class="inline-flex items-center px-8 py-4 bg-white/15 backdrop-blur-md text-white font-semibold rounded-2xl border border-white/30 hover:bg-white/25 transition-all duration-300 group">
+          <button (click)="cat.id && navigateToCategory(cat.id, $event)"
+            class="inline-flex items-center px-8 py-4 bg-white/15 backdrop-blur-md text-white font-semibold rounded-2xl border border-white/30 hover:bg-white/25 transition-all duration-300 group cursor-pointer">
             <span>Voir {{ cat.name }}</span>
             <svg class="w-5 h-5 ml-3 transition-transform duration-300 group-hover:translate-x-1" fill="none"
               stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </div>
