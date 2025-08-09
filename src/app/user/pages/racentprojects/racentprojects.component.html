@@ -1,41 +1,127 @@
-<div class="bg-white p-6 text-center">
-  <h2 class="text-2xl font-semibold text-[#5a567e] mb-6">
-    Mes <span class="font-medium">projets récents</span>
-  </h2>
+<!-- Modern Recent Projects Section -->
+<section class="py-16 px-4 bg-gradient-to-br from-[#f8f9fa] via-white to-[#f1f3f4]">
+  <div class="max-w-7xl mx-auto">
 
-  @if (loading) {
-  <div class="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-6">
-    @for (_ of [1,2,3,4]; track _) {
-    <div class="bg-gray-200 h-48 rounded-lg animate-pulse"></div>
-    }
-  </div>
-  } @else {
-  <div class="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-6">
-    @for (project of recentProjects; track project.id) {
-    <div class="relative bg-gray-100 h-48 rounded-lg overflow-hidden shadow-md group">
-      @if (getFirstImage(project)) {
-      <img [src]="getFirstImage(project)" [alt]="project.name"
-        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        (error)="onImageError($event)" />
-      } @else {
-      <div class="w-full h-full flex items-center justify-center text-gray-500">
-        Aucune Image
+    <!-- Section Header -->
+    <div class="text-center mb-12" data-aos="fade-up" data-aos-duration="800">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-[#5a567e] rounded-full mb-4 animate-pulse-slow">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+          </path>
+        </svg>
       </div>
-      }
+      <h2 class="text-4xl font-bold text-gray-800 mb-3 animate-fade-in-up">
+        Projets <span class="text-[#5a567e]">Récents</span>
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto animate-fade-in-up delay-200">
+        Découvrez mes dernières réalisations en architecture d'intérieur et design
+      </p>
+      <div
+        class="w-24 h-1 bg-gradient-to-r from-[#5a567e] to-[#8b87c7] mx-auto mt-4 rounded-full animate-scale-in delay-400">
+      </div>
     </div>
-    }
 
-    <!-- Fill empty spots with placeholders -->
-    @for (i of [1, 2, 3, 4].slice(recentProjects.length); track i) {
-    <div class="bg-gray-100 h-48 rounded-lg flex items-center justify-center text-gray-400">
-      Espace {{ i + recentProjects.length }}
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex flex-col items-center py-16">
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+      </div>
+      <p class="text-gray-600 mt-4 text-lg">Chargement des projets récents...</p>
     </div>
-    }
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="text-center py-16">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.966-.833-2.736 0L4.077 16.5c-.77.833.192 2.5 1.732 2.5z">
+          </path>
+        </svg>
+      </div>
+      <p class="text-red-600 mb-6 text-lg">Erreur lors du chargement des projets</p>
+      <button (click)="retryLoad()" class="btn-retry">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+          </path>
+        </svg>
+        Réessayer
+      </button>
+    </div>
+
+    <!-- Projects Grid -->
+    <div *ngIf="!loading && !error">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        @for (project of recentProjects; track project.id; let i = $index) {
+        <a [routerLink]="['/project-details', project.id]" class="project-card group fade-in block cursor-pointer">
+          <div class="project-image-container">
+            @if (getFirstImage(project)) {
+            <img [src]="getFirstImage(project)" [alt]="project.name" class="project-image"
+              (error)="onImageError($event)" />
+            } @else {
+            <div class="project-placeholder">
+              <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                </path>
+              </svg>
+              <p class="text-sm text-gray-500 mt-2">Aucune Image</p>
+            </div>
+            }
+
+            <!-- Project Overlay -->
+            <div class="project-overlay">
+              <div class="project-overlay-content">
+                <h3 class="project-title">{{ project.name }}</h3>
+                <p class="project-category">{{ project.category?.name || 'Design' }}</p>
+                <a [routerLink]="['/project-details', project.id]" class="project-view-btn cursor-pointer">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                    </path>
+                  </svg>
+                  Voir le projet
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Info -->
+          <div class="project-info">
+            <h4 class="project-info-title">{{ project.name }}</h4>
+            <p class="project-info-description" *ngIf="project.description">
+              {{ project.description | slice:0:60 }}{{ project.description?.length > 60 ? '...' : '' }}
+            </p>
+          </div>
+        </a>
+        } @empty {
+        <div class="col-span-full text-center py-16">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+              </path>
+            </svg>
+          </div>
+          <h3 class="text-xl text-gray-600 mb-2">Aucun projet récent</h3>
+          <p class="text-gray-500">Les projets récents apparaîtront ici bientôt</p>
+        </div>
+        }
+      </div>
+
+      <!-- Call to Action -->
+      <div class="text-center">
+        <a routerLink="/portfolio" routerLinkActive="active" class="btn-portfolio group">
+          <span>Voir tous les projets</span>
+          <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
   </div>
-  }
-
-  <a routerLink="/portfolio" routerLinkActive="active"
-    class="bg-[#2e3b55] text-white px-6 py-2 rounded-full hover:bg-[#1e2a40] transition inline-block text-center">
-    Voir plus
-  </a>
-</div>
+</section>

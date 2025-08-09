@@ -36,13 +36,13 @@ import { HttpClientModule } from '@angular/common/http';
     NotificationComponent
   ],
   template: `
-    <!-- Video Preloader - Shows only once per session -->
+    <!-- Video Preloader - Shows on page refresh only, not on navigation -->
     <app-video-preloader 
       *ngIf="!appReady && !hasSeenVideo" 
       (videoReady)="onAppReady($event)">
     </app-video-preloader>
 
-    <!-- Main App Content - Shows after video preloader or immediately if video already seen -->
+    <!-- Main App Content - Shows after video preloader or immediately on navigation -->
     <div *ngIf="appReady || hasSeenVideo">
       <router-outlet></router-outlet>
     </div>

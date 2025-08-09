@@ -100,6 +100,18 @@ export class NavbarComponent {
       },
 
       {
+        title: "CV Management",
+        icon: 'fa-solid fa-file-pdf',
+        style: '#cbd5e1',
+        subItems:
+          [
+            { title: "Add CV", route: "/admin/add/cv" },
+            { title: "List CVs", route: "/admin/list/cvs" },
+          ],
+        isOpen: false,
+      },
+
+      {
         title: "Contact",
         icon: 'fa-solid fa-address-book',
         style: '#cbd5e1',

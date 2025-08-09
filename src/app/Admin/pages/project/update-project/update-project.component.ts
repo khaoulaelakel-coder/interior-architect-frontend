@@ -6,6 +6,7 @@ import { ApiService } from '../../../../services/api.service';
 import { category } from '../../../../model/category.model';
 import { Project } from '../../../../model/project.model';
 import Swal from 'sweetalert2';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-update-project',
@@ -236,12 +237,17 @@ export class UpdateProjectComponent implements OnInit {
       });
     }
 
+    // Send IDs of existing images to keep (so backend can delete the others)
+    const existingImageIds = this.existingImages.map(img => img.id);
+    formData.append('keep_image_ids', JSON.stringify(existingImageIds));
+
     // Debug: Log what's being sent
     console.log('Form data being sent:');
     console.log('Name:', this.ProjectForm.get('name')?.value);
     console.log('Description:', this.ProjectForm.get('description')?.value);
     console.log('Category ID:', this.ProjectForm.get('category_id')?.value);
     console.log('Selected Images Count:', this.selectedImages.length);
+    console.log('Existing Images to Keep:', existingImageIds);
 
     // Log FormData contents
     console.log('FormData contents:');
@@ -323,8 +329,8 @@ export class UpdateProjectComponent implements OnInit {
     return !!(control?.invalid && control?.touched);
   }
 
-  getImageUrl(imagePath: string): string {
-    return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${imagePath}`;
+  getImageUrl(imageData: string): string {
+    return imageData || 'assets/Image/user.png';
   }
 
   onImageError(event: Event): void {

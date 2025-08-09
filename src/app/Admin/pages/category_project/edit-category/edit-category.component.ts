@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import Swal from 'sweetalert2';
 import { ApiService } from '../../../../services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-edit-category',
@@ -66,7 +67,7 @@ export class EditCategoryComponent implements OnInit {
           // Handle existing cover image
           if (categoryData.cover) {
             this.existingCover = categoryData.cover;
-            this.previewUrl = 'https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/' + categoryData.cover;
+            this.previewUrl = categoryData.cover || 'assets/Image/user.png';
           }
         } else {
           console.error('Invalid response structure:', res);

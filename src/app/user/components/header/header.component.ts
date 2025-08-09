@@ -1,15 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   isMobileMenuOpen = false;
+  isScrolled = false;
+
+  ngOnInit() {
+    this.checkScroll();
+  }
+
+  ngOnDestroy() {
+    // Cleanup if needed
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.checkScroll();
+  }
+
+  private checkScroll() {
+    this.isScrolled = window.scrollY > 50; // Trigger after 50px scroll
+  }
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;

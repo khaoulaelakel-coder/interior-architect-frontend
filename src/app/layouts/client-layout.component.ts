@@ -9,13 +9,13 @@ import { FooterComponent } from "../user/components/footer/footer.component";
 
 @Component({
 
-    selector: "app-client-layout",
-    standalone: true,
-    imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
-    template: `
+  selector: "app-client-layout",
+  standalone: true,
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
+  template: `
     <div class="flex flex-col min-h-screen">
       <app-header></app-header>
-      <main class="flex-grow">
+      <main class="flex-grow pt-32 md:pt-28 sm:pt-24">
         <router-outlet></router-outlet>
       </main>
       <app-footer></app-footer>
@@ -23,4 +23,4 @@ import { FooterComponent } from "../user/components/footer/footer.component";
   `,
 })
 
-export class clientLayoutComponent {  }
+export class clientLayoutComponent { }

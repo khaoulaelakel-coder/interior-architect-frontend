@@ -6,6 +6,7 @@ import { category } from '../../../../model/category.model';
 import { ConfirmDeleteComponent } from '../../../shared/confirm-delete/confirm-delete.component';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'app-all-projects',
   standalone: true,
@@ -21,6 +22,7 @@ export class AllProjectsComponent implements OnInit {
   showModal: boolean = false;
   modalImages: string[] = [];
   currentImageIndex: number = 0;
+  currentProject: any = null; // Store current project for cover selection
   showModalDelete: boolean = false;
   loading = false;
 
@@ -100,26 +102,33 @@ export class AllProjectsComponent implements OnInit {
     const category = this.categories.find(cat => cat.id === categoryId);
     return category ? category.name : 'Catégorie inconnue';
   }
-  showImages(images: any[]) {
+  showImages(images: any[], project?: any) {
     // Handle different image data structures
     if (!images || images.length === 0) {
       console.warn('No images to show');
       return;
     }
 
+    // Store current project for cover selection
+    this.currentProject = project;
+
     // Transform images to URLs based on data structure
     this.modalImages = images.map(img => {
       if (typeof img === 'string') {
-        // If image is just a string path
-        return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${img}`;
+        // Check if it's already a base64 data URL
+        if (img.startsWith('data:')) {
+          return img;
+        }
+        // Images now come as base64 data directly from the API
+        return img || 'assets/Image/user.png';
       } else if (img && typeof img === 'object') {
-        // If image is an object with image_url property
+        // If image is an object, return the base64 data
         if (img.image_url) {
-          return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${img.image_url}`;
+          return img.image_url || 'assets/Image/user.png';
         } else if (img.path) {
-          return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${img.path}`;
+          return img.path || 'assets/Image/user.png';
         } else if (img.url) {
-          return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${img.url}`;
+          return img.url || 'assets/Image/user.png';
         }
       }
       // Fallback
@@ -181,16 +190,20 @@ export class AllProjectsComponent implements OnInit {
   getProjectImageUrl(image: any): string {
     // Handle different image data structures
     if (typeof image === 'string') {
-      // If image is just a string path
-      return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${image}`;
+      // Check if it's already a base64 data URL
+      if (image.startsWith('data:')) {
+        return image;
+      }
+      // If image is just a file path
+      return image || 'assets/Image/user.png';
     } else if (image && typeof image === 'object') {
-      // If image is an object with image_url property
+      // If image is an object, return the base64 data
       if (image.image_url) {
-        return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${image.image_url}`;
+        return image.image_url || 'assets/Image/user.png';
       } else if (image.path) {
-        return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${image.path}`;
+        return image.path || 'assets/Image/user.png';
       } else if (image.url) {
-        return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${image.url}`;
+        return image.url || 'assets/Image/user.png';
       }
     }
     // Fallback
@@ -247,6 +260,38 @@ export class AllProjectsComponent implements OnInit {
   cancelDelete() {
     this.showModalDelete = false;
     this.deleteId = null
+  }
+
+  setCoverImage(projectId: number, imageId: number) {
+    this.apiservice.setCoverImage(projectId, imageId).subscribe({
+      next: (response) => {
+        console.log('Cover image set successfully:', response);
+        this.loadProjects(); // Reload to see updated cover
+        // Close modal if open
+        this.showModal = false;
+
+        // Show success message
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Image de couverture mise à jour!"
+        });
+      },
+      error: (error) => {
+        console.error('Error setting cover image:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur',
+          text: 'Erreur lors de la mise à jour de l\'image de couverture'
+        });
+      }
+    });
   }
 
 }

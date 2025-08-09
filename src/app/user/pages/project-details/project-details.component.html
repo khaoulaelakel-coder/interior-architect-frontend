@@ -18,9 +18,9 @@
 
         <!-- Image Gallery -->
         @if (project.images && project.images.length > 0) {
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto">
             <!-- Main Image Display -->
-            <div class="relative">
+            <div class="relative h-96 md:h-[500px] lg:h-[600px] xl:h-[650px]">
                 <img [src]="getImageUrl(project.images[currentImageIndex].image_url)" [alt]="project.name"
                     class="w-full h-full object-cover rounded-lg" (error)="onImageError($event)" />
 

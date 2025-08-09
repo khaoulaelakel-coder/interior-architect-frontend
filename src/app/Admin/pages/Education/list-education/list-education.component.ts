@@ -25,16 +25,7 @@ export class ListEducationComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.api.getEducations().subscribe({
-      next: (res: any) => {
-        this.educations = res.education; // ✅ matches the Laravel key
-      },
-      error: (err) => {
-        console.error('Error fetching education data:', err);
-      }
-    });
     this.loadEducations(); // Load educations when the component initializes
-
   }
 
   // send to update page

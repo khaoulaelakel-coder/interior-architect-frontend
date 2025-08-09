@@ -2,6 +2,7 @@ import { category } from '../../../../model/category.model';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../../services/api.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 
@@ -14,7 +15,7 @@ import Swal from 'sweetalert2';
 })
 export class AllCategoryComponent implements OnInit {
   categories: category[] = [];
-  baseStorageUrl = 'https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/'; // Database image storage URL
+  // Base storage URL no longer needed - using base64 data directly
 
   constructor(private api: ApiService, private router: Router) { }
 
@@ -49,7 +50,28 @@ export class AllCategoryComponent implements OnInit {
           },
           error: (err) => {
             console.error('Error deleting category:', err);
-            Swal.fire('Error!', 'There was an error deleting the category.', 'error');
+
+            let errorMessage = 'There was an error deleting the category.';
+
+            // Check for specific error types
+            if (err.status === 422 && err.error?.message) {
+              // Cannot delete category with projects
+              errorMessage = err.error.message;
+
+              // Show project names if available
+              if (err.error.projects && err.error.projects.length > 0) {
+                const projectNames = err.error.projects.map((p: any) => `• ${p.name}`).join('\n');
+                errorMessage += `\n\nProjects in this category:\n${projectNames}`;
+              }
+            } else if (err.status === 404) {
+              errorMessage = 'Category not found.';
+            } else if (err.error?.error_details) {
+              errorMessage = `Error: ${err.error.error_details}`;
+            } else if (err.error?.message) {
+              errorMessage = err.error.message;
+            }
+
+            Swal.fire('Error!', errorMessage, 'error');
           }
         });
       }
@@ -60,10 +82,9 @@ export class AllCategoryComponent implements OnInit {
     this.router.navigate(['/admin/add/categories']);
   }
 
-  // Get full image URL
-  getImageUrl(coverPath: string): string {
-    if (!coverPath) return '';
-    return this.baseStorageUrl + coverPath;
+  // Get image URL - now using base64 data directly
+  getImageUrl(coverData: string): string {
+    return coverData || 'assets/Image/user.png';
   }
 
   onImageError(event: Event): void {

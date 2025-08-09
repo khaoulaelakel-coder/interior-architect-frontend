@@ -1,6 +1,8 @@
 import { Component, OnInit, signal, Signal } from '@angular/core';
 import { Skill } from '../../model/skills.model';
 import { ApiService } from '../../services/api.service';
+import { environment } from '../../../environments/environment';
+
 @Component({
   selector: 'app-skills',
   standalone: true,
@@ -21,6 +23,11 @@ export class SkillsComponent implements OnInit {
     this.api.getSkills().subscribe((res: any) => {
       this.skills.set(res.skills || []);
     });
+  }
+
+  getImageUrl(logoData: string): string {
+    // Skills now come with base64 data directly from the API
+    return logoData || 'assets/Image/user.png';
   }
 
   onImageError(event: Event): void {

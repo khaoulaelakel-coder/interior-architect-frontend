@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApiService } from '../../../../services/api.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-update-skills',
@@ -40,7 +41,7 @@ export class UpdateSkillsComponent implements OnInit {
         });
 
         if (skill.logo) {
-          this.previewUrl = 'https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/' + skill.logo;
+          this.previewUrl = skill.logo || 'assets/Image/user.png';
         }
       },
       error: (err) => {

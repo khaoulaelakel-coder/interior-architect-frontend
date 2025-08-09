@@ -1,49 +1,86 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Experience } from '../../../model/experience.model';
 import { Education } from '../../../model/education.model';
 import { ApiService } from '../../../services/api.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, CommonModule } from '@angular/common';
+import { Subject } from 'rxjs';
+import { takeUntil, finalize, catchError } from 'rxjs/operators';
+
 @Component({
   selector: 'app-experience',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, CommonModule],
   templateUrl: './experience.component.html',
   styleUrl: './experience.component.css'
 })
-export class ExperienceComponent implements OnInit {
+export class ExperienceComponent implements OnInit, OnDestroy {
   experiences: Experience[] = [];
   educations: Education[] = [];
+
+  // Loading states
+  experiencesLoading = true;
+  educationsLoading = true;
+
+  // Error states
+  experiencesError = false;
+  educationsError = false;
+
+  private destroy$ = new Subject<void>();
 
   constructor(private api: ApiService) { }
 
   ngOnInit(): void {
-    this.loadExperiences();
-    this.loadEducations();
+    this.loadData();
   }
 
-loadExperiences(): void {
-  this.api.getExperiences().subscribe((res: any) => {
-    this.experiences = res.experiences.sort((a: { currently_working: any; year_end: any; year_start: any; }, b: { currently_working: any; year_end: any; year_start: any; }) => {
-      if (a.currently_working && !b.currently_working) return -1;
-      if (!a.currently_working && b.currently_working) return 1;
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
-      const dateA = new Date(a.year_end || a.year_start).getTime();
-      const dateB = new Date(b.year_end || b.year_start).getTime();
-      return dateB - dateA;
+  private loadData(): void {
+    // Load both in parallel for better performance
+    const experiences$ = this.api.getExperiences();
+    const educations$ = this.api.getEducations();
+
+    // Load experiences
+    experiences$.pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.experiencesLoading = false),
+      catchError(error => {
+        this.experiencesError = true;
+        console.error('Error loading experiences:', error);
+        return [];
+      })
+    ).subscribe((res: any) => {
+      if (res && res.experiences) {
+        this.experiences = res.experiences.sort((a: any, b: any) => {
+          if (a.currently_working && !b.currently_working) return -1;
+          if (!a.currently_working && b.currently_working) return 1;
+          return new Date(b.year_end || b.year_start).getTime() - new Date(a.year_end || a.year_start).getTime();
+        });
+        this.experiencesError = false;
+      }
     });
-  });
-}
 
-
-loadEducations(): void {
-  this.api.getEducations().subscribe((res: any) => {
-    console.log('Educations API response:', res);
-    this.educations = (res.educations || res.education || []).sort((a: Education, b: Education) => {
-      const endA = new Date(a.year_end || a.year_start).getTime();
-      const endB = new Date(b.year_end || b.year_start).getTime();
-      return endB - endA;
+    // Load educations  
+    educations$.pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.educationsLoading = false),
+      catchError(error => {
+        this.educationsError = true;
+        console.error('Error loading educations:', error);
+        return [];
+      })
+    ).subscribe((res: any) => {
+      if (res) {
+        this.educations = (res.educations || res.education || []).sort((a: Education, b: Education) => {
+          const endA = new Date(a.year_end || a.year_start).getTime();
+          const endB = new Date(b.year_end || b.year_start).getTime();
+          return endB - endA;
+        });
+        this.educationsError = false;
+      }
     });
-  });
-}
-
+  }
 }

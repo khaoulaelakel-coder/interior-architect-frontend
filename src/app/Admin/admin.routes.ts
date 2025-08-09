@@ -19,6 +19,9 @@ import { CreateCategoryComponent } from './pages/category_project/create-categor
 import { AllCategoryComponent } from './pages/category_project/all-category/all-category.component';
 import { EditCategoryComponent } from './pages/category_project/edit-category/edit-category.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { AllCvsComponent } from './pages/cv/all-cvs/all-cvs.component';
+import { AddCvComponent } from './pages/cv/add-cv/add-cv.component';
+import { UpdateCvComponent } from './pages/cv/update-cv/update-cv.component';
 
 export const adminRoutes: Routes = [
     {
@@ -104,6 +107,21 @@ export const adminRoutes: Routes = [
     {
         path: 'contact',
         component: ContactComponent,
+        canActivate: [adminGuard]
+    },
+    {
+        path: 'list/cvs',
+        component: AllCvsComponent,
+        canActivate: [adminGuard]
+    },
+    {
+        path: 'add/cv',
+        component: AddCvComponent,
+        canActivate: [adminGuard]
+    },
+    {
+        path: 'edit/cv/:id',
+        component: UpdateCvComponent,
         canActivate: [adminGuard]
     },
     // Redirect empty admin path to dashboard

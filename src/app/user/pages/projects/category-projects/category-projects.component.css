@@ -1,0 +1,120 @@
+/* Custom animations for category projects */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(90, 86, 126, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 30px rgba(90, 86, 126, 0.5);
+    }
+}
+
+/* Project cards entrance animation */
+.group {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+/* Staggered animation delays */
+.group:nth-child(1) {
+    animation-delay: 0ms;
+}
+
+.group:nth-child(2) {
+    animation-delay: 100ms;
+}
+
+.group:nth-child(3) {
+    animation-delay: 200ms;
+}
+
+.group:nth-child(4) {
+    animation-delay: 300ms;
+}
+
+.group:nth-child(5) {
+    animation-delay: 400ms;
+}
+
+.group:nth-child(6) {
+    animation-delay: 500ms;
+}
+
+.group:nth-child(7) {
+    animation-delay: 600ms;
+}
+
+.group:nth-child(8) {
+    animation-delay: 700ms;
+}
+
+/* Text truncation utilities */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Enhanced hover effects */
+.group:hover .bg-white {
+    animation: pulse-glow 2s infinite;
+}
+
+/* Gradient text effect */
+.text-transparent {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Custom scrollbar for better aesthetics */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #5a567e, #8b87c7);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #4a4668, #7b77b7);
+}

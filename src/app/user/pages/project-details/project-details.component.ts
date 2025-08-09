@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
+import { environment } from '../../../../environments/environment';
+
 
 @Component({
   selector: 'app-project-details',
@@ -41,8 +43,9 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
-  getImageUrl(imagePath: string): string {
-    return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${imagePath}`;
+  getImageUrl(imageData: string): string {
+    // Images now come as base64 data directly from the API
+    return imageData || 'assets/Image/user.png';
   }
 
   onImageError(event: Event): void {

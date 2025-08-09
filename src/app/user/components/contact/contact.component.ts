@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NotificationService } from '../../../services/notification.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-contact',
@@ -39,7 +40,7 @@ export class ContactComponent {
       return;
     }
 
-    this.http.post('https://interior-architect-backend-main-36p6qz.laravel.cloud/api/contact', this.formData).subscribe({
+    this.http.post(`${environment.apiUrl}/contact`, this.formData).subscribe({
       next: () => {
         this.notificationService.showSuccess('Message envoyé avec succès !');
         // Reset form

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../services/api.service';
+import { Subject } from 'rxjs';
+import { takeUntil, catchError, finalize } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-racentprojects',
@@ -10,14 +13,22 @@ import { ApiService } from '../../../services/api.service';
   templateUrl: './racentprojects.component.html',
   styleUrl: './racentprojects.component.css'
 })
-export class RacentprojectsComponent implements OnInit {
+export class RacentprojectsComponent implements OnInit, OnDestroy {
   recentProjects: any[] = [];
   loading: boolean = true;
+  error = false;
+
+  private destroy$ = new Subject<void>();
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.loadRecentProjects();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadRecentProjects(): void {
@@ -34,8 +45,8 @@ export class RacentprojectsComponent implements OnInit {
     });
   }
 
-  getImageUrl(imagePath: string): string {
-    return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${imagePath}`;
+  retryLoad(): void {
+    this.loadRecentProjects();
   }
 
   onImageError(event: Event): void {
@@ -49,8 +60,12 @@ export class RacentprojectsComponent implements OnInit {
   }
 
   getFirstImage(project: any): string {
+    // Use cover_image if available, otherwise fallback to first image
+    if (project.cover_image) {
+      return project.cover_image;
+    }
     if (project.images && project.images.length > 0) {
-      return this.getImageUrl(project.images[0].image_url);
+      return project.images[0].image_url; // Return base64 data directly
     }
     return ''; // Return empty string if no images
   }

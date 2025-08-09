@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface LoginRequest {
   email: string;
@@ -40,13 +41,15 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
 
-  private readonly API_BASE_URL = 'https://interior-architect-backend-main-36p6qz.laravel.cloud/api';
+  private readonly API_BASE_URL = environment.apiUrl;
 
   private currentUserSubject = new BehaviorSubject<User | null>(this.getCurrentUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasValidToken());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+
+
 
   constructor() {
     this.initializeAuth();

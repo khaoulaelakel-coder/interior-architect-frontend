@@ -31,6 +31,9 @@ import { UpdateSkillsComponent } from './Admin/pages/skils/update-skills/update-
 import { PortfolioComponent } from './user/pages/projects/portfolio/portfolio.component';
 import { CategoryProjectsComponent } from './user/pages/projects/category-projects/category-projects.component';
 import { ProjectDetailsComponent } from './user/pages/project-details/project-details.component';
+import { AllCvsComponent } from './Admin/pages/cv/all-cvs/all-cvs.component';
+import { AddCvComponent } from './Admin/pages/cv/add-cv/add-cv.component';
+import { UpdateCvComponent } from './Admin/pages/cv/update-cv/update-cv.component';
 
 export const routes: Routes = [
   {
@@ -144,6 +147,21 @@ export const routes: Routes = [
       {
         path: 'contact-list',
         component: ContactListComponent,
+        canActivate: [adminGuard]
+      },
+      {
+        path: 'list/cvs',
+        component: AllCvsComponent,
+        canActivate: [adminGuard]
+      },
+      {
+        path: 'add/cv',
+        component: AddCvComponent,
+        canActivate: [adminGuard]
+      },
+      {
+        path: 'edit/cv/:id',
+        component: UpdateCvComponent,
         canActivate: [adminGuard]
       },
 

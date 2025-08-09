@@ -34,12 +34,25 @@ export class CategoryProjectsComponent implements OnInit {
     }
   }
 
-  getImageUrl(filename: string): string {
-    return `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${filename}`;
+  getImageUrl(imageData: string | null): string {
+    // Images now come as base64 data directly from the API
+    return imageData || 'assets/Image/user.png';
   }
+
 
   onImageError(event: Event): void {
     const target = event.target as HTMLImageElement;
     target.src = 'assets/Image/user.png'; // Use existing image as fallback
   }
+
+  getFirstImage(project: any): string | null {
+    if (project.cover_image) {
+      return project.cover_image; // default cover image
+    }
+    if (project.images && project.images.length > 0) {
+      return project.images[0].image_url; // fallback to first image in array
+    }
+    return null; // no image available
+  }
+
 }

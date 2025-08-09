@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { category } from '../../../../model/category.model';
 import { ApiService } from '../../../../services/api.service';
 import { RouterModule } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'app-portfolio',
   standalone: true,
@@ -11,8 +12,6 @@ import { RouterModule } from '@angular/router';
 })
 export class PortfolioComponent implements OnInit {
   categories: category[] = [];
-  baseStorageUrl = 'https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/'; // Database image storage URL
-
 
   constructor(private api: ApiService) { }
 
@@ -31,10 +30,9 @@ export class PortfolioComponent implements OnInit {
     });
   }
 
-  // Get full image URL
-  getImageUrl(coverPath: string): string {
-    if (!coverPath) return '';
-    return this.baseStorageUrl + coverPath;
+  // Get full image URL - now using base64 data directly
+  getImageUrl(coverData: string): string {
+    return coverData || 'assets/Image/user.png';
   }
 
   onImageError(event: Event): void {

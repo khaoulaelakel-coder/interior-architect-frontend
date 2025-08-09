@@ -4,6 +4,7 @@ import { Skill } from '../../../../model/skills.model';
 import { ApiService } from '../../../../services/api.service';
 import Swal from 'sweetalert2';
 import { Route, Router } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-all-skills',
@@ -33,7 +34,7 @@ export class AllSkillsComponent implements OnInit {
           console.log(`Skill ${index}:`, {
             name: skill.name,
             logo: skill.logo,
-            fullImageUrl: `https://interior-architect-backend-main-36p6qz.laravel.cloud/api/images/${skill.logo}`
+            fullImageUrl: this.getImageUrl(skill.logo)
           });
         });
       },
@@ -91,6 +92,11 @@ export class AllSkillsComponent implements OnInit {
 
   createSkill(): void {
     this.router.navigate(['/admin/add/skills']);
+  }
+
+  getImageUrl(logoData: string): string {
+    // Skills now come with base64 data directly from the API
+    return logoData || 'assets/Image/user.png';
   }
 
   onImageError(event: Event): void {
