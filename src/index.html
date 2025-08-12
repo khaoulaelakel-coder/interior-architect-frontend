@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Interior Architect</title>
+  <base href="/">
+
+  <!-- Single, compatible viewport meta tag for all iOS versions -->
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+
+  <!-- iOS-specific meta tags for ALL iPhone models -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Interior Architect">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- iOS Safari specific optimizations -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1B1838">
+  <meta name="msapplication-TileColor" content="#1B1838">
+
+  <!-- iOS 15+ and iPhone 13/14/15 Pro Max specific -->
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-orientations" content="portrait">
+
+  <!-- Samsung/Android compatibility -->
+  <meta name="HandheldFriendly" content="true">
+  <meta name="MobileOptimized" content="width">
+
+  <!-- Favicon and app icons -->
+  <link rel="icon" type="image/jpg" href="assets/Image/logo.jpg">
+  <link rel="apple-touch-icon" href="assets/Image/logo.jpg">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/Image/logo.jpg">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/Image/logo.jpg">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/Image/logo.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/Image/logo.jpg">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- iOS-specific CSS for all iPhone models and iOS versions -->
+  <style>
+    /* iOS Safari specific fixes for all iPhone models */
+    @supports (-webkit-touch-callout: none) {
+
+      /* iPhone X, XS, XR, 11, 11 Pro, 11 Pro Max, 12, 12 mini, 12 Pro, 12 Pro Max, 13, 13 mini, 13 Pro, 13 Pro Max, 14, 14 Plus, 14 Pro, 14 Pro Max, 15, 15 Plus, 15 Pro, 15 Pro Max */
+      body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        -webkit-text-size-adjust: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Fix for iPhone notch and Dynamic Island */
+      .header,
+      header,
+      [class*="header"] {
+        padding-top: calc(env(safe-area-inset-top) + 1rem);
+      }
+
+      /* Fix for iPhone bottom safe area */
+      .footer,
+      footer,
+      [class*="footer"] {
+        padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+      }
+
+      /* Fix for iPhone input zoom */
+      input,
+      textarea,
+      select {
+        font-size: 16px !important;
+      }
+
+      /* Fix for iPhone scrolling */
+      * {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+      }
+
+      /* Fix for iPhone touch events */
+      button,
+      a,
+      [role="button"] {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+    }
+
+    /* iOS 15.5 specific fixes */
+    @supports (-webkit-touch-callout: none) and (not (overflow: -webkit-marquee)) {
+      body {
+        /* iOS 15.5 specific viewport handling */
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+      }
+
+      html {
+        height: -webkit-fill-available;
+      }
+
+      /* Fix for iOS 15.5 safe area issues */
+      body {
+        padding-top: max(env(safe-area-inset-top), 20px);
+        padding-bottom: max(env(safe-area-inset-bottom), 20px);
+      }
+    }
+
+    /* iOS 16.2 specific fixes */
+    @supports (-webkit-touch-callout: none) and (overflow: -webkit-marquee) {
+      body {
+        /* iOS 16.2 specific viewport handling */
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
+
+      /* Fix for iOS 16.2 Dynamic Island */
+      body {
+        padding-top: max(env(safe-area-inset-top), 20px);
+        padding-bottom: max(env(safe-area-inset-bottom), 20px);
+      }
+    }
+
+    /* iPhone 12/13/14/15 Pro Max specific */
+    @media only screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) {
+      body {
+        font-size: 16px;
+      }
+    }
+
+    /* iPhone 12/13/14/15 Pro specific */
+    @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
+      body {
+        font-size: 16px;
+      }
+    }
+
+    /* iPhone 12/13/14/15 mini specific */
+    @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+      body {
+        font-size: 15px;
+      }
+    }
+
+    /* iPhone X/XS/11 Pro specific */
+    @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+      body {
+        font-size: 15px;
+      }
+    }
+
+    /* iPhone XR/11 specific */
+    @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) {
+      body {
+        font-size: 16px;
+      }
+    }
+
+    /* iOS 15.5 and 16.2 specific media queries */
+    @media screen and (max-width: 428px) and (-webkit-min-device-pixel-ratio: 2) {
+
+      /* iPhone 12/13/14/15 Pro Max on iOS 15.5/16.2 */
+      body {
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+      }
+    }
+
+    @media screen and (max-width: 390px) and (-webkit-min-device-pixel-ratio: 2) {
+
+      /* iPhone 12/13/14/15 Pro on iOS 15.5/16.2 */
+      body {
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+      }
+    }
+
+    @media screen and (max-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
+
+      /* iPhone 12/13/14/15 mini on iOS 15.5/16.2 */
+      body {
+        font-size: 15px;
+        -webkit-text-size-adjust: 100%;
+      }
+    }
+
+    /* Fallback for older iOS versions */
+    @supports not (env(safe-area-inset-top)) {
+      body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .header,
+      header,
+      [class*="header"] {
+        padding-top: 1rem;
+      }
+
+      .footer,
+      footer,
+      [class*="footer"] {
+        padding-bottom: 1rem;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <app-root></app-root>
+</body>
+
+</html>

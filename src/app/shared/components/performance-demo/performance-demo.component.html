@@ -1,0 +1,40 @@
+<div class="performance-demo">
+    <div class="demo-header">
+        <h2>Performance Monitor Demo</h2>
+        <p>This demo showcases the performance monitoring capabilities. Use the buttons below to simulate different
+            performance scenarios.</p>
+    </div>
+
+    <div class="demo-controls">
+        <button class="btn btn-primary" (click)="simulatePerformanceData()">
+            Simulate Normal Performance
+        </button>
+        <button class="btn btn-warning" (click)="simulateSlowPerformance()">
+            Simulate Slow Performance
+        </button>
+        <button class="btn btn-success" (click)="simulateGoodPerformance()">
+            Simulate Good Performance
+        </button>
+        <button class="btn btn-danger" (click)="resetSimulation()">
+            Reset Simulation
+        </button>
+    </div>
+
+    <div class="demo-info">
+        <h3>What This Demo Shows:</h3>
+        <ul>
+            <li><strong>Real-time Monitoring:</strong> Performance metrics are collected automatically</li>
+            <li><strong>Threshold Alerts:</strong> Warnings when metrics exceed configured thresholds</li>
+            <li><strong>Core Web Vitals:</strong> FCP, LCP, CLS, and FID measurements</li>
+            <li><strong>Performance Scoring:</strong> Overall performance score (0-100)</li>
+            <li><strong>Smart Recommendations:</strong> Actionable advice for performance improvements</li>
+            <li><strong>Data Export:</strong> Export metrics in JSON or CSV format</li>
+        </ul>
+    </div>
+
+    <div class="demo-note">
+        <p><strong>Note:</strong> The performance monitor automatically starts collecting data when the page loads.
+            Use the simulation buttons to see how different performance scenarios affect the metrics and
+            recommendations.</p>
+    </div>
+</div>

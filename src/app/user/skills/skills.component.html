@@ -1,0 +1,75 @@
+<section #skillsSection class="py-20 bg-white overflow-hidden">
+  <h1 class="text-3xl font-bold text-center mb-12 text-[#645F80]">Compétences</h1>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+  <div class="w-full max-w-4xl mx-auto text-center py-12">
+    <div
+      class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-[#5a567e] to-[#8b87c7] rounded-full mb-6 shadow-lg">
+      <svg class="w-8 h-8 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+        </path>
+      </svg>
+    </div>
+    <p class="text-gray-600 text-lg">Chargement des compétences...</p>
+  </div>
+  } @else if (error()) {
+  <!-- Error State -->
+  <div class="w-full max-w-4xl mx-auto text-center py-12">
+    <div class="inline-flex items-center justify-center w-24 h-24 bg-red-100 rounded-full mb-6">
+      <svg class="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Erreur de chargement</h3>
+    <p class="text-gray-600 mb-8 max-w-md mx-auto">{{ error() }}</p>
+    <button (click)="retryLoad()"
+      class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#5a567e] to-[#8b87c7] text-white font-semibold rounded-full hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+        </path>
+      </svg>
+      Réessayer
+    </button>
+  </div>
+  } @else if (skills().length > 0) {
+  <!-- Skills Carousel -->
+  <div class="w-full max-w-4xl mx-auto overflow-hidden relative">
+    <div class="carousel-track flex w-fit animate-carousel gap-6">
+      @for (skill of skills(); track skill.logo) {
+      <div
+        class="min-w-[200px] flex-shrink-0 flex flex-col items-center justify-center  hover:scale-105 transition-transform duration-300">
+        <img [src]="skill.logo" [alt]="skill.name" class="h-12 object-contain mb-2" (error)="onImageError($event)" />
+        <span class="text-sm text-gray-800 font-medium">{{ skill.name }}</span>
+      </div>
+      }
+      <!-- Duplicate once for seamless scroll -->
+      @for (skill of skills(); track skill.logo) {
+      <div
+        class="min-w-[200px] flex-shrink-0 flex flex-col items-center justify-center  hover:scale-105 transition-transform duration-300">
+        <img [src]="skill.logo" [alt]="skill.name" class="h-12 object-contain mb-2" (error)="onImageError($event)" />
+        <span class="text-sm text-gray-800 font-medium">{{ skill.name }}</span>
+      </div>
+      }
+    </div>
+  </div>
+  } @else {
+  <!-- Empty State -->
+  <div class="w-full max-w-4xl mx-auto text-center py-12">
+    <div class="inline-flex items-center justify-center w-24 h-24 bg-gray-100 rounded-full mb-6">
+      <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+        </path>
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Aucune compétence trouvée</h3>
+    <p class="text-gray-600 mb-8 max-w-md mx-auto">
+      Il n'y a actuellement aucune compétence disponible. Revenez bientôt pour découvrir nos nouvelles compétences.
+    </p>
+  </div>
+  }
+</section>

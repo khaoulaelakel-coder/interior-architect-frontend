@@ -1,0 +1,71 @@
+<div class="h-full bg-gradient-to-b from-gray-900 to-gray-800 text-white transition-all duration-300 shadow-xl"
+  [ngClass]="{ 'w-64 lg:w-64 md:w-56 sm:w-48': isSidebarOpen, 'w-16 md:w-12 sm:w-10': !isSidebarOpen }">
+
+  <!-- Sidebar Toggle Button -->
+  <div class="flex justify-end p-3">
+    <button (click)="togglesidebar()"
+      class="text-white hover:text-cyan-400 transition-colors duration-300 p-2 rounded-lg hover:bg-gray-700">
+      <i class="fa-solid fa-bars text-lg"></i>
+    </button>
+  </div>
+
+  <!-- Logo Section -->
+  <div class="text-center mb-8 p-4">
+    <img src="assets/Image/logo.png" alt="logo" class="mx-auto rounded-lg shadow-lg"
+      [ngClass]="{ 'h-32 w-32 lg:h-32 lg:w-32 md:h-24 md:w-24 sm:h-20 sm:w-20': isSidebarOpen, 'h-12 w-12 md:h-10 md:w-10 sm:h-8 sm:w-8': !isSidebarOpen }" />
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="px-4 md:px-3 sm:px-2">
+
+    <!-- Loop through main menu items -->
+    @for (menu of menus; track menu.title) {
+    <div class="mb-2">
+
+      <!-- MAIN MENU ITEM -->
+      <div
+        class="flex items-center justify-between cursor-pointer p-3 md:p-2.5 sm:p-2 hover:text-cyan-400 hover:bg-gray-700/50 rounded-lg mx-2 transition-all duration-300"
+        (click)="menu.subItems ? toggleSubMenu(menu.title) : setSelectedTitle(menu.title); $event.stopPropagation()">
+        <div class="flex items-center gap-3 md:gap-2 sm:gap-1">
+          @if (menu.route) {
+          <a [routerLink]="menu.route" class="flex items-center gap-3 md:gap-2 sm:gap-1 w-full">
+            <i class="fas" [ngClass]="menu.icon" [style.color]="menu.style"></i>
+            @if (isSidebarOpen) {
+            <span class="text-sm md:text-xs sm:text-xs">{{ menu.title }}</span>
+            }
+          </a>
+          } @else {
+          <div class="flex items-center gap-3 md:gap-2 sm:gap-1">
+            <i class="fas" [ngClass]="menu.icon" [style.color]="menu.style"></i>
+            @if (isSidebarOpen) {
+            <span class="text-sm md:text-xs sm:text-xs">{{ menu.title }}</span>
+            }
+          </div>
+          }
+        </div>
+
+        <!-- Only show chevron if submenu exists -->
+        @if (isSidebarOpen && menu.subItems) {
+        <i class="fas" [ngClass]="isSubMenuOpen(menu.title) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        }
+      </div>
+
+      <!-- SUBMENU ITEMS (if open) -->
+      @if (menu.subItems && isSubMenuOpen(menu.title)) {
+      <ul class="ml-8 md:ml-6 sm:ml-4 text-sm md:text-xs sm:text-xs text-gray-400 space-y-1">
+        @for (item of menu.subItems; track item.title) {
+        <li>
+          <a class="hover:text-cyan-400 cursor-pointer block" [routerLink]="item.route"
+            (click)="setSelectedTitle(menu.title)">
+            {{ item.title }}
+          </a>
+        </li>
+        }
+      </ul>
+      }
+
+    </div>
+    }
+
+  </nav>
+</div>

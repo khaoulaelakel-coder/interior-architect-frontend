@@ -1,0 +1,255 @@
+<div class="flex justify-center items-center h-full p-6">
+  <div class="bg-white p-6 rounded-xl shadow w-full max-w-5xl">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-xl font-semibold">Liste des Projets</h2>
+      <div class="flex gap-2">
+        <!-- Bulk Delete Button -->
+        @if (selectedProjects.length > 0) {
+        <button (click)="bulkDeleteProjects()"
+          class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+          <i class="fas fa-trash"></i>
+          <span>Supprimer ({{ selectedProjects.length }})</span>
+        </button>
+        }
+        <button (click)="createProject()"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+          <i class="fas fa-plus"></i>
+          <span>Ajouter un Projet</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bulk Selection Controls -->
+    <div class="mb-4 flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" [checked]="isAllSelected" (change)="toggleSelectAll()"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+        <span class="text-sm font-medium">Sélectionner tout</span>
+      </label>
+      @if (selectedProjects.length > 0) {
+      <span class="text-sm text-gray-600">
+        {{ selectedProjects.length }} projet(s) sélectionné(s)
+      </span>
+      }
+    </div>
+
+    <table class="w-full text-sm text-left border">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr>
+          <th class="px-4 py-2 w-12">
+            <!-- Header checkbox -->
+          </th>
+          <th class="px-4 py-2">Nom</th>
+          <th class="px-4 py-2">Catégorie</th>
+          <th class="px-4 py-2">Description</th>
+          <th class="px-4 py-2">Image</th>
+          <th class="px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (project of projects; track project.id; let i = $index) {
+        <tr class="border-t hover:bg-gray-50">
+          <td class="px-4 py-2">
+            <!-- Individual project checkbox -->
+            <input type="checkbox" [checked]="isProjectSelected(project.id!)"
+              (change)="toggleProjectSelection(project.id!)"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+          </td>
+          <td class="px-4 py-2">{{ project.name }}</td>
+          <td class="px-4 py-2">{{ getCategoryName(+project.category_id) }}</td>
+
+          <td class="px-4 py-2 max-w-xs">
+            <div class="inline-flex items-start gap-2 flex-wrap">
+              @if (isDescriptionExpanded(i)) {
+              <span>{{ project.description }}</span>
+              <button class="text-blue-500 text-xs" (click)="toggleDescription(i)">
+                Lire moins
+              </button>
+              } @else {
+              @if (project.description && project.description.length > 100) {
+              <span>{{ project.description.substring(0, 100) }}...</span>
+              <button class="text-blue-500 text-xs" (click)="toggleDescription(i)">
+                Lire plus
+              </button>
+              } @else {
+              <span>{{ project.description }}</span>
+              }
+              }
+            </div>
+          </td>
+
+          <td class="px-4 py-2">
+            <ng-container *ngIf="project.images && project.images.length > 0; else noImage">
+              <div class="relative group">
+                <img [src]="project['cover_image'] || getProjectImageUrl(project.images[0])"
+                  class="h-12 rounded cursor-pointer hover:opacity-80 transition-opacity"
+                  (click)="showImages(project.images, project)" alt="Project image" (error)="onImageError($event)" />
+                <div *ngIf="project.images.length > 1"
+                  class="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {{ project.images.length }}
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #noImage>
+              <span class="text-gray-400">Aucune image</span>
+            </ng-template>
+          </td>
+          <td class="px-4 py-2">
+            <button (click)="openDeleteModal(project.id!)" class="bg-red-500 text-white px-2 py-1 rounded">
+              Supprimer
+            </button>
+
+            <button (click)="editProject(project.id!)" class="text-blue-600 hover:underline cursor-pointer">
+              Modifier
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+
+    <!-- Loading indicator -->
+    @if (loading) {
+    <div class="flex justify-center items-center py-8">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <span class="ml-2 text-gray-600">Chargement...</span>
+    </div>
+    }
+
+    <!-- Pagination Controls -->
+    @if (pagination && totalPages > 1) {
+    <div class="flex justify-center items-center mt-6 space-x-2">
+      <!-- Previous Button -->
+      <button (click)="loadPage(currentPage - 1)" [disabled]="currentPage === 1"
+        class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+        Précédent
+      </button>
+
+      <!-- Page Numbers -->
+      @for (page of getPageNumbers(); track page) {
+      <button (click)="loadPage(page)" [class]="page === currentPage 
+          ? 'px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-md' 
+          : 'px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50'">
+        {{ page }}
+      </button>
+      }
+
+      <!-- Next Button -->
+      <button (click)="loadPage(currentPage + 1)" [disabled]="currentPage === totalPages"
+        class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+        Suivant
+      </button>
+    </div>
+
+    <!-- Page Info -->
+    <div class="text-center text-sm text-gray-500 mt-2">
+      Page {{ currentPage }} sur {{ totalPages }}
+      ({{ pagination.total }} projets au total)
+    </div>
+    }
+  </div>
+
+</div>
+@if (showModalDelete) {
+<app-confirm-delete (onConfirm)="confirmDelete()" (onCancel)="cancelDelete()">
+</app-confirm-delete>
+}
+
+<!-- Image Gallery Modal -->
+@if (showModal) {
+<div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" (click)="closeModal()">
+
+  <div class="relative max-w-4xl max-h-screen p-2 sm:p-4 w-full h-full flex flex-col overflow-y-auto"
+    (click)="$event.stopPropagation()">
+
+    <!-- Close Button -->
+    <button class="absolute top-4 right-4 text-white hover:text-gray-300 z-10 bg-black bg-opacity-50 rounded-full p-2"
+      (click)="closeModal()">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <!-- Main Image Container -->
+    <div class="flex-1 flex items-center justify-center relative min-h-0">
+
+      <!-- Previous Button -->
+      @if (modalImages.length > 1 && currentImageIndex > 0) {
+      <button
+        class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 bg-black bg-opacity-50 rounded-full p-3 z-10"
+        (click)="prevImage()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      }
+
+      <!-- Image -->
+      <img [src]="modalImages[currentImageIndex]"
+        class="max-w-full max-h-[60vh] sm:max-h-[70vh] object-contain rounded-lg" alt="Project image" />
+
+      <!-- Next Button -->
+      @if (modalImages.length > 1 && currentImageIndex < modalImages.length - 1) { <button
+        class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 bg-black bg-opacity-50 rounded-full p-3 z-10"
+        (click)="nextImage()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+        </button>
+        }
+    </div>
+
+    <!-- Image Counter -->
+    @if (modalImages.length > 1) {
+    <div class="text-center text-white mt-4">
+      {{ currentImageIndex + 1 }} / {{ modalImages.length }}
+    </div>
+    }
+
+    <!-- Cover Selection -->
+    @if (currentProject && currentProject.images && currentProject.images.length > 0) {
+    <div class="text-center mt-4 px-2">
+      @if (currentProject.images[currentImageIndex]?.is_cover === true) {
+      <div class="inline-flex items-center bg-green-600 text-white px-3 py-2 sm:px-4 rounded-lg text-sm sm:text-base">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span class="hidden sm:inline">Image de couverture actuelle</span>
+        <span class="sm:hidden">Couverture actuelle</span>
+      </div>
+      } @else {
+      <button (click)="setCoverImage(currentProject.id, currentProject.images[currentImageIndex].id)"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 sm:px-4 rounded-lg transition-colors text-sm sm:text-base">
+        <span class="hidden sm:inline">Définir comme couverture</span>
+        <span class="sm:hidden">Définir couverture</span>
+      </button>
+      }
+    </div>
+    }
+
+    <!-- Thumbnail Navigation -->
+    @if (modalImages.length > 1) {
+    <div class="flex justify-center mt-4 space-x-2 overflow-x-auto pb-2 px-2">
+      @for (image of modalImages; track idx; let idx = $index) {
+      <div class="relative">
+        <img [src]="image" class="h-16 w-16 object-cover rounded cursor-pointer border-2 transition-all duration-200"
+          [class.border-white]="idx === currentImageIndex" [class.border-gray-500]="idx !== currentImageIndex"
+          [class.opacity-100]="idx === currentImageIndex" [class.opacity-60]="idx !== currentImageIndex"
+          (click)="goToImage(idx)" alt="Thumbnail" />
+        <!-- Cover indicator -->
+        @if (currentProject && currentProject.images[idx]?.is_cover) {
+        <div
+          class="absolute -top-1 -right-1 bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        }
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>
+}

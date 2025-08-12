@@ -1,0 +1,10 @@
+/* Apply hover effect to the .service-card class */
+.service-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for scaling and shadow */
+  }
+  
+  .service-card:hover {
+    transform: scale(1.1); /* Zoom effect */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  }
+  
