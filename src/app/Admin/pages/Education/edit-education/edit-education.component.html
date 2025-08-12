@@ -1,0 +1,48 @@
+<div class="flex justify-center items-center h-full px-4">
+  <div class="bg-white rounded-xl p-10 shadow-md w-full max-w-2xl">
+    <h2 class="text-center text-lg font-semibold text-gray-800 mb-8">Update Education</h2>
+
+    <form [formGroup]="educationForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+      <div>
+        <label class="block text-sm mb-1">Year start</label>
+        <input
+          type="date"
+          formControlName="year_start"
+          class="w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+        />
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Year end</label>
+        <input
+          type="date"
+          formControlName="year_end"
+          class="w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+        />
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Diploma</label>
+        <input
+          type="text"
+          formControlName="diploma"
+          class="w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+        />
+      </div>
+      <div>
+        <label class="block text-sm mb-1">School</label>
+        <input
+          type="text"
+          formControlName="school"
+          class="w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+        />
+      </div>
+      <div class="md:col-span-2 flex justify-center pt-4">
+        <button
+          type="submit"
+          class="bg-teal-600 text-white px-8 py-2 rounded-full hover:bg-teal-700"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="flex justify-center items-center h-full">
+  <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-xl font-semibold">List Experience</h2>
+      <button (click)="createExperience()"
+        class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+        <i class="fas fa-plus"></i>
+        <span>Ajouter une Expérience</span>
+      </button>
+    </div>
+    <table class="w-full border rounded-md text-sm text-left">
+      <thead class="bg-gray-100 text-gray-600">
+        <tr>
+          <th class="py-2 px-3">Place</th>
+          <th class="py-2 px-3">Post</th>
+          <th class="py-2 px-3">City</th>
+          <th class="py-2 px-3">Start</th>
+          <th class="py-2 px-3">End</th>
+          <th class="py-2 px-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- For Angular 17+ with new control flow -->
+        @for (item of experience; track item.id) {
+        <tr class="border-t hover:bg-gray-50">
+          <td class="py-2 px-3">{{ item.place }}</td>
+          <td class="py-2 px-3">{{ item.poste }}</td>
+          <td class="py-2 px-3">{{ item.city }}</td>
+          <td class="py-2 px-3">{{ item.year_start | date: 'yyyy/MM/dd'}}</td>
+          <td class="py-2 px-3">{{ item.year_end | date: 'yyyy/MM/dd'}}</td>
+          <td class="px-4 py-3">
+            <!-- Actions buttons (optional) -->
+            <button class="text-blue-600 hover:underline text-xs mr-2" (click)="editExperience(item.id!)">Edit</button>
+            <button class="text-red-600 hover:underline text-xs" (click)="deleteExperience(item.id!)">Delete</button>
+          </td>
+        </tr>
+        }
+
+        <!-- Alternative: For Angular 16 and below -->
+        <!-- 
+        <tr *ngFor="let item of experiences; trackBy: trackByFn" class="border-t hover:bg-gray-50">
+          <td class="py-2 px-3">{{ item.place }}</td>
+          <td class="py-2 px-3">{{ item.post }}</td>
+          <td class="py-2 px-3">{{ item.city }}</td>
+          <td class="py-2 px-3">{{ item.start }}</td>
+          <td class="py-2 px-3">{{ item.end }}</td>
+          <td class="py-2 px-3">...</td>
+        </tr>
+        -->
+      </tbody>
+    </table>
+  </div>
+</div>

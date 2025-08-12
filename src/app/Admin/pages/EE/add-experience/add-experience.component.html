@@ -1,0 +1,68 @@
+<div class="flex justify-center items-center h-full bg-gray-100">
+  <form
+    [formGroup]="experienceForm"
+    (ngSubmit)="onSubmit()"
+    class="bg-white p-8 rounded-xl shadow-md w-full max-w-3xl"
+  >
+    <h2 class="text-center text-xl font-semibold mb-6">Add Experience</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-medium mb-1">Year start</label>
+        <input
+          type="date"
+          formControlName="year_start"
+          class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1">Year end</label>
+        <input
+          type="date"
+          formControlName="year_end"
+          class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+      <div class="md:col-span-2 flex items-center space-x-2">
+  <input type="checkbox" formControlName="currently_working" id="currentlyWorking" />
+  <label for="currentlyWorking" class="text-sm">I currently work here</label>
+</div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Post</label>
+        <input
+          type="text"
+          formControlName="poste"
+          placeholder="Developer"
+          class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1">Place</label>
+        <input
+          type="text"
+          formControlName="place"
+          placeholder="Company"
+          class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium mb-1">City</label>
+        <input
+          type="text"
+          formControlName="city"
+          placeholder="Casablanca"
+          class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+    </div>
+    <div class="text-center mt-6">
+      <button
+        type="submit"
+        class="bg-teal-600 text-white px-6 py-2 rounded hover:bg-teal-700"
+        [disabled]="experienceForm.invalid"
+      >
+        Add
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,116 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 py-12">
+    <!-- Header Section -->
+    <div class="container mx-auto px-4 mb-12">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                Portfolio
+            </h1>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                Explorez nos différentes catégories de projets d'aménagement intérieur
+            </p>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    @if (isLoading) {
+    <div class="text-center py-20">
+        <div
+            class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-6 shadow-lg">
+            <svg class="w-8 h-8 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                </path>
+            </svg>
+        </div>
+        <p class="text-gray-600 text-lg">Chargement des catégories...</p>
+    </div>
+    }
+
+    <!-- Error State -->
+    @if (error && !isLoading) {
+    <div class="text-center py-16">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+            <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+        </div>
+        <p class="text-red-600 mb-6 text-lg">{{ error }}</p>
+        <button (click)="refreshCategories()"
+            class="inline-flex items-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                </path>
+            </svg>
+            Réessayer
+        </button>
+    </div>
+    }
+
+    <!-- Categories Grid -->
+    @if (!isLoading && !error && categories.length > 0) {
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @for (category of categories; track trackByCategoryId($index, category); let i = $index) {
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+                [style.animation-delay]="(i * 100) + 'ms'" (click)="navigateToCategory(category.id)">
+
+                <!-- Image Container with Progressive Loading -->
+                <div class="relative h-64 overflow-hidden">
+                    <app-progressive-image [itemId]="category.id" itemType="category"
+                        [thumbnailUrl]="getImageUrl(category)" [alt]="category.name" containerClass="w-full h-full"
+                        imageClass="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        [loadMediumOnHover]="true" [loadFullOnClick]="false" [autoLoadMedium]="true">
+                    </app-progressive-image>
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+                    <!-- Category Title Overlay -->
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <h3 class="text-white text-xl font-bold mb-1">{{ category.name }}</h3>
+                        @if (category.description) {
+                        <p class="text-white/80 text-sm line-clamp-2">{{ category.description }}</p>
+                        }
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="p-6">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500 text-sm">
+                            {{ category.projects_count || 0 }} projet(s)
+                        </span>
+                        <div
+                            class="flex items-center text-blue-600 group-hover:text-blue-800 transition-colors duration-200">
+                            <span class="text-sm font-medium mr-2">Voir plus</span>
+                            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading && !error && categories.length === 0) {
+    <div class="text-center py-20">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-6">
+            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                </path>
+            </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Aucune catégorie trouvée</h3>
+        <p class="text-gray-500">Les catégories apparaîtront ici bientôt</p>
+    </div>
+    }
+</div>

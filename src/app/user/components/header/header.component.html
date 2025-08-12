@@ -1,0 +1,84 @@
+<header
+  class="fixed top-0 left-0 right-0 flex justify-between items-center p-6 md:p-5 sm:p-4 z-50 transition-all duration-300"
+  [ngClass]="{
+    'bg-[#F5F5F5] shadow-md': !isScrolled,
+    'bg-white/90 backdrop-blur-md shadow-lg': isScrolled
+  }">
+  <!-- Logo -->
+  <div class="flex-shrink-0">
+    <a routerLink="/">
+      <img src="assets/Image/logo.jpg" alt="logo"
+        class="h-16 md:h-14 sm:h-12 w-auto cursor-pointer hover:opacity-80 transition-opacity">
+    </a>
+  </div>
+
+  <!-- Desktop Navigation Menu -->
+  <nav class="hidden lg:block">
+    <ul class="flex gap-8 text-lg list-none">
+      <li><a href="/" class="hover:text-[#645F80] transition-colors duration-300 font-medium">Accueil</a></li>
+      <li><a href="#" (click)="scrollTo('about')"
+          class="hover:text-[#645F80] transition-colors duration-300 font-medium">À propos</a></li>
+      <li><a href="/portfolio" class="hover:text-[#645F80] transition-colors duration-300 font-medium">Projets</a></li>
+      <li><a href="#" (click)="scrollTo('contact')"
+          class="hover:text-[#645F80] transition-colors duration-300 font-medium">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Mobile Menu Button -->
+  <button class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+    (click)="toggleMobileMenu()">
+    <i class="fas fa-bars text-xl text-gray-700"></i>
+  </button>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div class="lg:hidden fixed inset-0 z-50" [class.hidden]="!isMobileMenuOpen">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black bg-opacity-50" (click)="toggleMobileMenu()"></div>
+
+  <!-- Menu Panel -->
+  <div class="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300"
+    [class.translate-x-0]="isMobileMenuOpen" [class.translate-x-full]="!isMobileMenuOpen">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center p-6 border-b border-gray-200">
+      <a routerLink="/portfolio" (click)="toggleMobileMenu()">
+        <img src="assets/Image/logo.jpg" alt="logo"
+          class="h-12 w-auto cursor-pointer hover:opacity-80 transition-opacity">
+      </a>
+      <button class="p-2 rounded-lg hover:bg-gray-100 transition-colors" (click)="toggleMobileMenu()">
+        <i class="fas fa-times text-xl text-gray-700"></i>
+      </button>
+    </div>
+
+    <!-- Menu Items -->
+    <nav class="p-6">
+      <ul class="space-y-4">
+        <li>
+          <a href="/"
+            class="block py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors text-lg font-medium text-gray-800">
+            <i class="fas fa-home mr-3 text-[#645F80]"></i>Accueil
+          </a>
+        </li>
+        <li>
+          <a href="#" (click)="scrollTo('about')"
+            class="block py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors text-lg font-medium text-gray-800">
+            <i class="fas fa-user mr-3 text-[#645F80]"></i>À propos
+          </a>
+        </li>
+        <li>
+          <a href="/portfolio"
+            class="block py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors text-lg font-medium text-gray-800">
+            <i class="fas fa-folder mr-3 text-[#645F80]"></i>Projets
+          </a>
+        </li>
+        <li>
+          <a href="#" (click)="scrollTo('contact')"
+            class="block py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors text-lg font-medium text-gray-800">
+            <i class="fas fa-envelope mr-3 text-[#645F80]"></i>Contact
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<section class="bg-[#1a2639] min-h-screen flex mt-6 items-center justify-center px-4 md:px-8">
+  <div class="max-w-7xl w-full flex flex-col md:flex-row items-center justify-evenly gap-12">
+
+    <!-- Left image -->
+    <div class="hidden md:block flex-shrink-0" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500">
+      <img src="assets/Image/3DC.png" alt="3D Character" class="max-h-[500px] w-[17rem]" />
+    </div>
+
+    <!-- Right form -->
+    <div class="bg-[#243954] p-6 sm:p-8 md:p-10 rounded-xl w-full max-w-xl">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#fbd1d4] mb-4">Avez-vous un projet ?</h2>
+      <p class="text-white text-sm mb-8">
+        Commencez votre croissance en ligne aujourd'hui<br />
+        et bénéficiez d'une remise de -5% sur votre premier projet.
+      </p>
+
+      <form class="space-y-4" (ngSubmit)="onSubmit()" #form="ngForm">
+        <div class="flex flex-col md:flex-row gap-4">
+          <input name="name" [(ngModel)]="formData.name" type="text" placeholder="Nom" required
+            class="bg-[#1f2c3d] text-white px-4 py-3 rounded-lg w-full placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fbd1d4]" />
+          <input name="email" [(ngModel)]="formData.email" type="email" placeholder="Votre E-mail" required
+            class="bg-[#1f2c3d] text-white px-4 py-3 rounded-lg w-full placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fbd1d4]" />
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-4">
+          <input name="phone" [(ngModel)]="formData.phone" type="text" placeholder="Numéro de téléphone"
+            class="bg-[#1f2c3d] text-white px-4 py-3 rounded-lg w-full placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fbd1d4]" />
+          <input name="website" [(ngModel)]="formData.website" type="text" placeholder="Votre site web"
+            class="bg-[#1f2c3d] text-white px-4 py-3 rounded-lg w-full placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fbd1d4]" />
+        </div>
+
+        <textarea name="message" [(ngModel)]="formData.message" rows="4" placeholder="Votre message" required
+          class="bg-[#1f2c3d] text-white px-4 py-3 rounded-lg w-full placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fbd1d4]"></textarea>
+
+        <button type="submit"
+          class="bg-gradient-to-r from-[#301934] to-[#23054d] text-white font-semibold px-6 py-2 rounded-full hover:opacity-90 transition">
+          Envoyer
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

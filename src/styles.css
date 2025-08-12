@@ -1,0 +1,735 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* iOS-specific fixes and improvements */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific styles */
+
+  /* Fix for iOS viewport issues */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Fix for iOS safe area insets */
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Fix for iOS input zoom */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  /* Fix for iOS button styling */
+  button {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Fix for iOS scrolling */
+  .scrollable-content {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Fix for iOS touch events */
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  /* Allow text selection in inputs and textareas */
+  input,
+  textarea,
+  [contenteditable] {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  /* Fix for iOS video autoplay */
+  video {
+    -webkit-playsinline: true;
+    playsinline: true;
+    object-fit: cover;
+  }
+
+  /* Fix for iOS fixed positioning */
+  .fixed,
+  .sticky {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  /* Fix for iOS backdrop filter */
+  .backdrop-blur {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Fix for iOS transitions */
+  * {
+    -webkit-transition: none !important;
+    transition: none !important;
+  }
+
+  /* Re-enable transitions after page load */
+  .transitions-enabled * {
+    -webkit-transition: all 0.3s ease !important;
+    transition: all 0.3s ease !important;
+  }
+}
+
+/* Samsung-specific fixes and improvements */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific styles */
+
+  /* Fix for iOS viewport issues */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Fix for iOS safe area insets */
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Fix for iOS input zoom */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  /* Fix for iOS button styling */
+  button {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Fix for iOS scrolling */
+  .scrollable-content {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Fix for iOS touch events */
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  /* Allow text selection in inputs and textareas */
+  input,
+  textarea,
+  [contenteditable] {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  /* Fix for iOS video autoplay */
+  video {
+    -webkit-playsinline: true;
+    playsinline: true;
+    object-fit: cover;
+  }
+
+  /* Fix for iOS fixed positioning */
+  .fixed,
+  .sticky {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  /* Fix for iOS backdrop filter */
+  .backdrop-blur {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Fix for iOS transitions */
+  * {
+    -webkit-transition: none !important;
+    transition: none !important;
+  }
+
+  /* Re-enable transitions after page load */
+  .transitions-enabled * {
+    -webkit-transition: all 0.3s ease !important;
+    transition: all 0.3s ease !important;
+  }
+}
+
+/* Samsung-specific fixes */
+@supports not (-webkit-touch-callout: none) {
+  /* Android/Samsung specific styles */
+
+  /* Fix for Samsung viewport issues */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Fix for Samsung safe area insets */
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Fix for Samsung input zoom */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  /* Fix for Samsung button styling */
+  button {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Fix for Samsung scrolling */
+  .scrollable-content {
+    overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Fix for Samsung touch events */
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  /* Allow text selection in inputs and textareas */
+  input,
+  textarea,
+  [contenteditable] {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  /* Fix for Samsung video autoplay */
+  video {
+    playsinline: true;
+    object-fit: cover;
+  }
+
+  /* Fix for Samsung fixed positioning */
+  .fixed,
+  .sticky {
+    transform: translateZ(0);
+  }
+
+  /* Fix for Samsung backdrop filter */
+  .backdrop-blur {
+    backdrop-filter: blur(10px);
+  }
+
+  /* Fix for Samsung transitions */
+  * {
+    transition: none !important;
+  }
+
+  /* Re-enable transitions after page load */
+  .transitions-enabled * {
+    transition: all 0.3s ease !important;
+  }
+}
+
+/* Samsung One UI specific fixes */
+.samsung-device {
+  /* Samsung One UI specific styles */
+  --samsung-safe-area: env(safe-area-inset-top);
+}
+
+.samsung-device .header,
+.samsung-device .navbar {
+  padding-top: calc(var(--samsung-safe-area) + 1rem);
+}
+
+.samsung-device .footer,
+.samsung-device .bottom-content {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+}
+
+/* Samsung keyboard fixes */
+.samsung-device input:focus,
+.samsung-device textarea:focus {
+  font-size: 16px !important;
+  transform: translateZ(0);
+}
+
+/* Samsung touch improvements */
+.samsung-device button,
+.samsung-device a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Samsung video fixes */
+.samsung-device video {
+  -webkit-playsinline: true;
+  playsinline: true;
+  x-webkit-airplay: allow;
+}
+
+/* Android-specific fixes */
+.android-device {
+  /* Android specific styles */
+}
+
+.android-device .header,
+.android-device .navbar {
+  padding-top: calc(env(safe-area-inset-top) + 1rem);
+}
+
+.android-device .footer,
+.android-device .bottom-content {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+}
+
+/* Chrome on Android fixes */
+.chrome-browser {
+  /* Chrome specific styles */
+}
+
+.chrome-browser input:focus,
+.chrome-browser textarea:focus {
+  font-size: 16px !important;
+}
+
+/* Mobile-specific utility classes */
+.mobile-safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.mobile-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.mobile-safe-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.mobile-safe-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+.mobile-touch-scroll {
+  overflow-scrolling: touch;
+}
+
+.mobile-no-zoom {
+  font-size: 16px !important;
+}
+
+.mobile-no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.mobile-no-callout {
+  -webkit-touch-callout: none;
+}
+
+.mobile-no-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Samsung Galaxy S series specific fixes */
+@media screen and (max-width: 412px) {
+
+  /* Samsung Galaxy S series and similar small screens */
+  .samsung-device .header,
+  .samsung-device .navbar {
+    padding-top: calc(env(safe-area-inset-top) + 0.5rem);
+  }
+
+  .samsung-device input,
+  .samsung-device textarea,
+  .samsung-device select {
+    font-size: 16px !important;
+  }
+
+  .samsung-device button {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* Samsung Galaxy S series landscape fixes */
+@media screen and (max-width: 915px) and (orientation: landscape) {
+
+  .samsung-device .header,
+  .samsung-device .navbar {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* iPhone-specific fixes */
+@media only screen and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 2) {
+  /* iPhone X and newer */
+
+  /* Fix for notch area */
+  .header,
+  .navbar {
+    padding-top: calc(env(safe-area-inset-top) + 1rem);
+  }
+
+  /* Fix for home indicator area */
+  .footer,
+  .bottom-content {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+  }
+
+  /* Fix for landscape orientation */
+  @media (orientation: landscape) {
+
+    .header,
+    .navbar {
+      padding-top: env(safe-area-inset-top);
+    }
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) and (not (translate: 0)) {
+  /* iOS Safari versions that don't support CSS transforms */
+
+  .transform,
+  .translate-x-0,
+  .translate-y-0 {
+    -webkit-transform: none !important;
+    transform: none !important;
+  }
+
+  /* Use alternative positioning methods */
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50%;
+    margin-left: -50%;
+  }
+}
+
+/* Fix for iOS Safari flexbox issues */
+@supports (-webkit-touch-callout: none) {
+  .flex-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .flex-item {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+  }
+}
+
+/* Fix for iOS Safari grid issues */
+@supports (-webkit-touch-callout: none) {
+  .grid-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+
+  .grid-item {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    flex: 0 0 auto;
+  }
+}
+
+/* Fix for iOS Safari animation issues */
+@supports (-webkit-touch-callout: none) {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .fade-in {
+    -webkit-animation: fadeIn 0.3s ease-in;
+    animation: fadeIn 0.3s ease-in;
+  }
+}
+
+/* Fix for iOS Safari font rendering */
+@supports (-webkit-touch-callout: none) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Fix for custom fonts on iOS */
+  @font-face {
+    font-family: 'Istok Web';
+    font-display: swap;
+    src: local('Istok Web');
+  }
+}
+
+/* Fix for iOS Safari image rendering */
+@supports (-webkit-touch-callout: none) {
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
+  }
+
+  /* Fix for iOS Safari image scaling */
+  .responsive-image {
+    max-width: 100%;
+    height: auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* Fix for iOS Safari form elements */
+@supports (-webkit-touch-callout: none) {
+
+  /* Fix for iOS Safari select dropdowns */
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+  }
+
+  /* Fix for iOS Safari checkboxes and radio buttons */
+  input[type="checkbox"],
+  input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 1.2em;
+    height: 1.2em;
+    border: 2px solid #ccc;
+    border-radius: 0.2em;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="checkbox"]:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='20,6 9,17 4,12'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0.8em;
+  }
+
+  input[type="radio"] {
+    border-radius: 50%;
+  }
+
+  input[type="radio"]:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3ccircle cx='12' cy='12' r='4'%3e%3c/circle%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0.6em;
+  }
+}
+
+/* Fix for iOS Safari modal and overlay issues */
+@supports (-webkit-touch-callout: none) {
+  .modal-overlay {
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-content {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+}
+
+/* Fix for iOS Safari navigation issues */
+@supports (-webkit-touch-callout: none) {
+  .nav-link {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .nav-link:active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Fix for iOS Safari loading states */
+@supports (-webkit-touch-callout: none) {
+  .loading-spinner {
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+  }
+
+  @-webkit-keyframes spin {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+/* Enable transitions after page load for iOS */
+.transitions-enabled {
+  -webkit-transition: all 0.3s ease !important;
+  transition: all 0.3s ease !important;
+}
+
+/* iOS-specific utility classes */
+.ios-safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.ios-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.ios-safe-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.ios-safe-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+.ios-touch-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+.ios-no-zoom {
+  font-size: 16px !important;
+}
+
+.ios-no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.ios-no-callout {
+  -webkit-touch-callout: none;
+}
+
+.ios-no-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary {
+  @apply bg-teal-600 text-white px-6 py-2 rounded-full hover:bg-teal-700 transition;
+}

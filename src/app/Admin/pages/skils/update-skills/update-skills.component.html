@@ -1,0 +1,47 @@
+<div class="flex justify-center items-center h-full">
+  <div class="bg-white p-6 rounded-xl shadow w-full max-w-3xl">
+    <h2 class="text-center text-xl font-semibold mb-6">Update Skill</h2>
+
+    <form [formGroup]="skillForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="grid grid-cols-1 gap-6">
+      
+      <!-- Name -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Skill Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none focus:ring focus:ring-blue-200"
+          placeholder="Enter skill name"
+        />
+        <div *ngIf="skillForm.get('name')?.invalid && skillForm.get('name')?.touched" class="text-red-500 text-sm mt-1">
+          Name is required.
+        </div>
+      </div>
+
+      <!-- Logo (optional) -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Logo (optional)</label>
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none"
+        />
+      </div>
+
+      <!-- Preview -->
+      <div *ngIf="previewUrl" class="mt-2">
+        <label class="block text-sm font-medium mb-1">Preview</label>
+        <img [src]="previewUrl" alt="Logo Preview" class="w-24 h-24 object-cover rounded border" />
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="skillForm.invalid"
+        class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
+      >
+        Update Skill
+      </button>
+    </form>
+  </div>
+</div>

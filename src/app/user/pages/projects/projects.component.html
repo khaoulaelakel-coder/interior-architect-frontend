@@ -1,0 +1,55 @@
+<div class="max-w-6xl mx-auto px-4 py-12">
+  <!-- Title Capsule -->
+  <div class="flex justify-center">
+    <div class="bg-[#e6d7c6] rounded-full px-6 py-2 text-[#4a3c39] text-lg font-semibold">
+      MES PROJETS
+    </div>
+  </div>
+
+  <!-- Subtitle -->
+  <p class="text-center text-[#2f2f2f] text-sm md:text-base mt-2">
+    Explorez nos derniers projets d'aménagement intérieur qui<br />
+    transforment les espaces en lieux de vie exceptionnels
+  </p>
+
+  <!-- Projects Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+    <!-- Card 1 -->
+    <div class="flex flex-col items-center">
+      <img src="assets/Image/2dfloor.jpg" alt="2D Design" class="w-full h-auto rounded-md shadow-sm" />
+      <a href="#" routerLink="/projects/2D" routerLinkActive="active"
+        class="mt-4 bg-[#2c3e50] text-white px-5 py-2 rounded-full text-sm hover:bg-[#1a242f]">
+        Voir les projets
+      </a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="flex flex-col items-center">
+      <img src="assets/Image/floor.jpg" alt="Floor Plan" class="w-full h-auto rounded-md shadow-sm" />
+      <p class="mt-2 text-xs text-gray-700 text-center">
+        Explorez nos plans d'aménagement complets,<br />soigneusement conçus pour optimiser l'espace et la
+        fonctionnalité.
+      </p>
+      <a href="#" routerLink="/projects/floorPlan" routerLinkActive="active"
+        class="mt-4 bg-[#2c3e50] text-white px-5 py-2 rounded-full text-sm hover:bg-[#1a242f]">
+        Voir les projets
+      </a>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="md:col-span-2 flex flex-col md:flex-row gap-4">
+      <div class="w-full md:w-1/2 flex flex-col items-center">
+        <img src="assets/Image/3dA.jpg" alt="3D Rendering" class="w-full h-auto rounded-md shadow-sm" />
+        <p class="mt-2 text-xs text-gray-700 text-center">
+          Plongez dans des rendus 3D réalistes<br />
+          qui donnent vie à nos visions de design avec profondeur et précision.
+        </p>
+        <a href="#" routerLink="/projects/3D" routerLinkActive="active"
+          class="mt-4 bg-[#2c3e50] text-white px-5 py-2 rounded-full text-sm hover:bg-[#1a242f]">
+          Voir les projets
+        </a>
+      </div>
+      <div class="w-full md:w-1/2"></div> <!-- Empty to maintain grid structure -->
+    </div>
+  </div>
+</div>

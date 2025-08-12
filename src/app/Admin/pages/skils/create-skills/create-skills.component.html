@@ -1,0 +1,20 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="space-y-4">
+  <div>
+    <label>Skill Name</label>
+    <input type="text" formControlName="name" class="border rounded w-full p-2" />
+  </div>
+
+  <div>
+    <label>Logo (optional)</label>
+    <input type="file" (change)="onFileSelected($event)" class="border rounded w-full p-2" />
+    <div *ngIf="previewUrl" class="mt-2">
+      <img [src]="previewUrl" alt="Preview" class="w-24 h-24 object-cover" />
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
+
+  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+    Create Skill
+  </button>
+</form>

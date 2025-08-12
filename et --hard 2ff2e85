@@ -1,0 +1,10 @@
+[33m83b6c5a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Fix image display issues - skills and categories now show images correctly
+[33mff837e7[m Update frontend components and add new assets
+[33m685fb25[m Update frontend components and add new assets
+[33mdcce42d[m Update frontend components and add new assets
+[33mf5b91e0[m feat: add video preloader and fix Angular type errors - Add video preloader component that shows while page loads - Fix Angular type assertion errors in add-project component - Add high-priority video preloading in index.html - Restore original profile component design
+[33mc4cd6bc[m fix: resolve image loading and video preloading issues - Fix admin skills images with correct backend URL - Improve video loading with better z-index and preloading - Add playsinline attribute for mobile compatibility
+[33m0ad2818[m fix: resolve Angular type assertion errors in create-category component
+[33m2ff2e85[m Update frontend components and add new assets
+[33m3a79a2a[m Add create buttons, loading indicators, and fix navigation issues
+[33m3673871[m Add French translations and production environment configuration

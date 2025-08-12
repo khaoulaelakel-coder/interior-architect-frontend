@@ -1,0 +1,110 @@
+<!-- Modern Recent Projects Section -->
+<section class="py-16 px-4 bg-gradient-to-br from-[#f8f9fa] via-white to-[#f1f3f4]">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Section Header -->
+    <div class="text-center mb-12" data-aos="fade-up" data-aos-duration="800">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-[#5a567e] rounded-full mb-4 animate-pulse-slow">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+          </path>
+        </svg>
+      </div>
+      <h2 class="text-4xl font-bold text-gray-800 mb-3 animate-fade-in-up">
+        Projets <span class="text-[#5a567e]">Récents</span>
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto animate-fade-in-up delay-200">
+        Découvrez mes dernières réalisations en architecture d'intérieur et design
+      </p>
+      <div
+        class="w-24 h-1 bg-gradient-to-r from-[#5a567e] to-[#8b87c7] mx-auto mt-4 rounded-full animate-scale-in delay-400">
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    @if (loading) {
+    <div class="flex flex-col items-center py-16">
+      <app-loading-dots text="Chargement des projets récents..."></app-loading-dots>
+    </div>
+    } @else if (error) {
+    <!-- Error State -->
+    <div class="text-center py-16">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.966-.833-2.736 0L4.077 16.5c-.77.833.192 2.5 1.732 2.5z">
+          </path>
+        </svg>
+      </div>
+      <p class="text-red-600 mb-6 text-lg">Erreur lors du chargement des projets</p>
+      <button (click)="retryLoad()" class="btn-retry">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+          </path>
+        </svg>
+        Réessayer
+      </button>
+    </div>
+    } @else {
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      @for (project of displayProjects; track project.id; let i = $index) {
+      <div class="project-card fade-in cursor-pointer" [style.animation-delay]="(i * 100) + 'ms'"
+        (click)="navigateToProject(project.id)">
+
+        <!-- Image Container with Progressive Loading -->
+        <div class="project-image-container">
+          <app-progressive-image [itemId]="project.id" itemType="project" [thumbnailUrl]="getImageUrl(project)"
+            [alt]="project.name" containerClass="w-full h-full" imageClass="project-image" [loadMediumOnHover]="true"
+            [loadFullOnClick]="false" [autoLoadMedium]="true">
+          </app-progressive-image>
+
+          <!-- Category Badge -->
+          @if (project.category) {
+          <div class="category-badge">
+            {{ project.category.name }}
+          </div>
+          }
+        </div>
+
+        <!-- Content -->
+        <div class="project-content">
+          <h3 class="project-title">{{ project.name }}</h3>
+          <p class="project-description">{{ project.description }}</p>
+
+          <div class="project-footer">
+            <span class="project-date">{{ formatDate(project.created_at) }}</span>
+            <span class="view-more">Voir plus →</span>
+          </div>
+        </div>
+      </div>
+      } @empty {
+      <div class="col-span-full text-center py-16">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+          <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 11H5m14 0a2 2 0 012 2v6a2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+            </path>
+          </svg>
+        </div>
+        <h3 class="text-xl text-gray-600 mb-2">Aucun projet récent</h3>
+        <p class="text-gray-500">Les projets récents apparaîtront ici bientôt</p>
+      </div>
+      }
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center">
+      <a routerLink="/portfolio" routerLinkActive="active" class="btn-portfolio group">
+        <span>Voir tous les projets</span>
+        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+    }
+  </div>
+</section>

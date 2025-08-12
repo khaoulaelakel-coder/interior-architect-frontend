@@ -1,0 +1,154 @@
+<div class="performance-monitor">
+    <div class="header">
+        <h3>Performance Monitor</h3>
+        <div class="score-container">
+            <div class="score" [style.color]="getScoreColor(performanceScore)">
+                {{ performanceScore }}
+            </div>
+            <div class="score-label">Score</div>
+        </div>
+    </div>
+
+    <!-- Performance Score -->
+    <div class="score-section">
+        <div class="score-bar">
+            <div class="score-fill" [style.width.%]="performanceScore"
+                [style.background-color]="getScoreColor(performanceScore)">
+            </div>
+        </div>
+    </div>
+
+    <!-- Current Metrics -->
+    <div class="metrics-grid" *ngIf="currentMetrics">
+        <div class="metric-card">
+            <div class="metric-label">Page Load</div>
+            <div class="metric-value">{{ formatTime(currentMetrics?.pageLoadTime) }}</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">API Response</div>
+            <div class="metric-value">{{ formatTime(currentMetrics?.apiResponseTime) }}</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Image Load</div>
+            <div class="metric-value">{{ formatTime(currentMetrics?.imageLoadTime) }}</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Cache Efficiency</div>
+            <div class="metric-value">{{ formatPercentage(currentMetrics?.cacheEfficiency) }}</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Memory Usage</div>
+            <div class="metric-value">{{ formatMemory(currentMetrics?.memoryUsage) }}</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Errors</div>
+            <div class="metric-value error">{{ currentMetrics?.errors }}</div>
+        </div>
+    </div>
+
+    <!-- Core Web Vitals -->
+    <div class="web-vitals" *ngIf="currentMetrics">
+        <h4>Core Web Vitals</h4>
+        <div class="vitals-grid">
+            <div class="vital-item">
+                <span class="vital-label">FCP:</span>
+                <span class="vital-value">{{ formatTime(currentMetrics?.firstContentfulPaint) }}</span>
+            </div>
+            <div class="vital-item">
+                <span class="vital-label">LCP:</span>
+                <span class="vital-value">{{ formatTime(currentMetrics?.largestContentfulPaint) }}</span>
+            </div>
+            <div class="vital-item">
+                <span class="vital-label">CLS:</span>
+                <span class="vital-value">{{ currentMetrics?.cumulativeLayoutShift?.toFixed(3) }}</span>
+            </div>
+            <div class="vital-item">
+                <span class="vital-label">FID:</span>
+                <span class="vital-value">{{ formatTime(currentMetrics?.firstInputDelay) }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alerts Section -->
+    <div class="alerts-section" *ngIf="alerts.length > 0">
+        <h4>Performance Alerts</h4>
+        <div class="alerts-list">
+            <div class="alert-item" *ngFor="let alert of alerts" [class]="'alert-' + alert.type">
+                <span class="alert-icon">{{ getAlertIcon(alert.type) }}</span>
+                <div class="alert-content">
+                    <div class="alert-message">{{ alert.message }}</div>
+                    <div class="alert-details">
+                        {{ alert.metric }}: {{ alert.value }} (threshold: {{ alert.threshold }})
+                    </div>
+                    <div class="alert-time">{{ alert.timestamp | date:'short' }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="recommendations" *ngIf="recommendations.length > 0">
+        <h4>Recommendations</h4>
+        <ul class="recommendations-list">
+            <li *ngFor="let recommendation of recommendations">{{ recommendation }}</li>
+        </ul>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+        <button class="btn btn-secondary" (click)="toggleDetails()">
+            {{ showDetails ? 'Hide' : 'Show' }} Details
+        </button>
+        <button class="btn btn-primary" (click)="exportData()">
+            Export {{ exportFormat.toUpperCase() }}
+        </button>
+        <button class="btn btn-danger" (click)="resetMetrics()">
+            Reset Metrics
+        </button>
+    </div>
+
+    <!-- Export Format Selector -->
+    <div class="export-format">
+        <label>Export Format:</label>
+        <select [(ngModel)]="exportFormat">
+            <option value="json">JSON</option>
+            <option value="csv">CSV</option>
+        </select>
+    </div>
+
+    <!-- Detailed Metrics (Collapsible) -->
+    <div class="detailed-metrics" *ngIf="showDetails">
+        <h4>Detailed Metrics History</h4>
+        <div class="metrics-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Page Load</th>
+                        <th>API Response</th>
+                        <th>Image Load</th>
+                        <th>Cache Eff.</th>
+                        <th>Memory</th>
+                        <th>Errors</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let metric of metrics.slice(-10)">
+                        <td>{{ metric.timestamp | date:'short' }}</td>
+                        <td>{{ formatTime(metric.pageLoadTime) }}</td>
+                        <td>{{ formatTime(metric.apiResponseTime) }}</td>
+                        <td>{{ formatTime(metric.imageLoadTime) }}</td>
+                        <td>{{ formatPercentage(metric.cacheEfficiency) }}</td>
+                        <td>{{ formatMemory(metric.memoryUsage) }}</td>
+                        <td class="error">{{ metric.errors }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

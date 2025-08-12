@@ -1,0 +1,102 @@
+<div class="flex justify-center items-center h-full">
+    <div class="bg-white p-6 rounded-xl shadow w-full max-w-3xl">
+        <h2 class="text-center text-xl font-semibold mb-6">Add Project</h2>
+
+        <form [formGroup]="ProjectForm" (ngSubmit)="OnSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <div>
+                <label class="text-sm block mb-1">Name</label>
+                <input formControlName="name" type="text" placeholder="Villa"
+                    [class]="'w-full border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-teal-500 ' + (nameInvalid ? 'border-red-500' : 'border-gray-300')" />
+                @if (nameInvalid) {
+                <p class="text-red-500 text-xs mt-1">Name is required</p>
+                }
+            </div>
+
+            <div>
+                <label class="text-sm block mb-1">Category</label>
+                <select formControlName="category_id"
+                    [class]="'w-full border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-teal-500 ' + (categoryInvalid ? 'border-red-500' : 'border-gray-300')">
+                    <option value="" disabled selected>Select category</option>
+                    @for (category of categories; track category.id) {
+                    <option [value]="category.id">{{ category.name }}</option>
+                    }
+                </select>
+                @if (categoryInvalid) {
+                <p class="text-red-500 text-xs mt-1">Category is required</p>
+                }
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="text-sm block mb-1">Description</label>
+                <textarea formControlName="description" rows="4" placeholder="Description"
+                    [class]="'w-full border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-teal-500 ' + (descriptionInvalid ? 'border-red-500' : 'border-gray-300')"></textarea>
+                @if (descriptionInvalid) {
+                <p class="text-red-500 text-xs mt-1">Description is required</p>
+                }
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="text-sm block mb-1">Pictures</label>
+                <div class="w-full border border-dashed border-gray-400 rounded px-3 py-4 text-center text-gray-400 hover:border-teal-500 cursor-pointer"
+                    (click)="fileInput.click()" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+                    <input type="file" multiple accept="image/*" (change)="onImageChange($event)" class="hidden"
+                        #fileInput>
+
+                    <div>
+                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
+                            viewBox="0 0 48 48">
+                            <path
+                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <p class="mt-2">Select images or drop them here</p>
+                        <p class="text-xs">PNG, JPG, JPEG up to 10MB</p>
+                    </div>
+                </div>
+
+                <!-- Image Previews -->
+                @if (imagesPreview.length > 0) {
+                <div class="flex flex-wrap gap-2 justify-center mt-4">
+                    @for (img of imagesPreview; track i; let i = $index) {
+                    <div class="relative">
+                        <img [src]="img" alt="preview" class="h-20 w-20 object-cover rounded shadow" />
+                        <button type="button" (click)="removeImage(i)"
+                            class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600">
+                            ×
+                        </button>
+                    </div>
+                    }
+                </div>
+                }
+
+                <!-- Show error if no images selected -->
+                @if (selectedImages.length === 0 && ProjectForm.touched) {
+                <p class="text-red-500 text-xs mt-1">At least one image is required</p>
+                }
+            </div>
+
+
+
+            <div class="md:col-span-2 flex justify-center mt-4">
+                <button type="submit" [disabled]="isLoading"
+                    [class]="'px-6 py-2 rounded-full transition duration-200 flex items-center gap-2 ' + (isFormValid && !isLoading ? 'bg-teal-600 text-white hover:bg-teal-700' : 'bg-gray-300 text-gray-500 cursor-not-allowed')">
+                    @if (isLoading) {
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    <span>Création en cours...</span>
+                    } @else {
+                    <span>Add Project</span>
+                    }
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
